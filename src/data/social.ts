@@ -1,4 +1,4 @@
-import { Code2, Mail, Linkedin } from 'lucide-react'
+import { Code2, Mail, Link2 } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 export interface SocialLink {
@@ -16,7 +16,7 @@ export const socialLinks: SocialLink[] = [
   {
     label: 'LinkedIn',
     href:  'https://www.linkedin.com/in/moustafa-elshahhat-a203ba406/',
-    icon:  Linkedin,
+    icon:  Link2,
   },
   {
     label: 'Email',
