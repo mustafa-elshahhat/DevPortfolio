@@ -34,8 +34,8 @@ export const projects: Project[] = [
     title:       'The Moon',
     description: 'An IPTV application featuring a rooms/watch-party system that allows users to synchronize video playback with friends.',
     stack:       ['Flutter', 'Dart', 'IPTV', 'Sockets'],
-    githubUrl:   'https://github.com/mustafaelshahhat-art/MoonWatch',
     imageBg:     'linear-gradient(135deg, #001833 0%, #003366 50%, #00488a 100%)',
+
     details: {
       problem:      'Watching IPTV content together remotely is difficult due to varying stream delays and lack of synchronization features.',
       solution:     'Implemented a watch-party room system using real-time communication to keep playback states synchronized among participants.',
@@ -90,8 +90,8 @@ export const projects: Project[] = [
     title:       'Kora Zone 365',
     description: 'A platform for organizing football tournaments and Ramadan leagues, featuring match schedules and team standings.',
     stack:       ['React', 'TypeScript', 'Tailwind', '.NET'],
-    githubUrl:   'https://github.com/mustafaelshahhat-art/KoraZone365',
     imageBg:     'linear-gradient(135deg, #3d1b04 0%, #7a3608 50%, #bd530d 100%)',
+
     details: {
       problem:      'Local football tournament organizers needed a digital way to manage brackets, schedules, and league tables.',
       solution:     'Built a web application to track tournament progress, display upcoming matches, and calculate points for participating teams.',
