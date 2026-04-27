@@ -21,7 +21,6 @@ const CODE_SNIPPET = `const engineer = {
   }
 };`
 
-/* ── Typewriter keywords for the subtitle ── */
 const KEYWORDS = ['Angular', 'Performance', 'Architecture', 'RxJS', 'Scalability']
 
 function useTypewriter(words: string[], typingSpeed = 80, deletingSpeed = 50, pauseDuration = 2000) {
@@ -71,17 +70,14 @@ export default function HeroSection() {
       aria-labelledby="hero-heading"
       className="relative min-h-screen w-full flex items-center justify-center overflow-hidden py-24"
     >
-      {/* ── Animated gradient mesh background ── */}
       <div className="hero-gradient-mesh" aria-hidden="true" />
 
-      {/* Content */}
       <motion.div
         {...cp}
         className="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 w-full
                    flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-20
                    h-full pt-16 lg:pt-0"
       >
-        {/* Left */}
         <div className="flex-1 space-y-8">
           <motion.p
             {...ip}
@@ -113,7 +109,6 @@ export default function HeroSection() {
             and seamless user experiences.
           </motion.p>
 
-          {/* ── Typing keyword ticker ── */}
           <motion.div {...ip} className="flex items-center gap-3">
             <span className="font-mono text-sm text-on-surface-variant/40 tracking-wide">
               {'> '}focused_on:
@@ -150,7 +145,7 @@ export default function HeroSection() {
           </motion.div>
 
           <motion.div {...ip} className="flex items-center gap-3 pt-2">
-            {socialLinks.slice(0, 2).map((link) => (
+            {socialLinks.map((link) => (
               <IconLink
                 key={link.label}
                 href={link.href}
@@ -162,7 +157,6 @@ export default function HeroSection() {
           </motion.div>
         </div>
 
-        {/* Right: Code block — now with floating animation */}
         <motion.div
           {...rp}
           className="flex-1 hidden lg:flex justify-center w-full max-w-md"
@@ -177,7 +171,6 @@ export default function HeroSection() {
               boxShadow:            '0 30px 80px rgba(0, 0, 0, 0.4), 0 0 60px rgba(192,193,255,0.06)',
             }}
           >
-            {/* Window dots */}
             <div className="flex gap-2 mb-6" aria-hidden="true">
               <div className="w-3 h-3 rounded-full bg-[#ff605c]" />
               <div className="w-3 h-3 rounded-full bg-[#ffbd44]" />
@@ -189,7 +182,6 @@ export default function HeroSection() {
               <code>{CODE_SNIPPET}</code>
             </pre>
 
-            {/* Inner glow bottom-right */}
             <div
               className="absolute -bottom-10 -right-10 w-48 h-48 rounded-full pointer-events-none"
               style={{
@@ -198,7 +190,6 @@ export default function HeroSection() {
               aria-hidden="true"
             />
 
-            {/* Top-left micro glow */}
             <div
               className="absolute -top-6 -left-6 w-32 h-32 rounded-full pointer-events-none"
               style={{
@@ -210,7 +201,6 @@ export default function HeroSection() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

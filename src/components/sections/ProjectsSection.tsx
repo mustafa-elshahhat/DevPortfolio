@@ -5,7 +5,6 @@ import { staggerContainer, fadeInUp, scaleIn, slideUpReveal } from '../../lib/mo
 import { projects, type Project } from '../../data/projects'
 import Container from '../ui/Container'
 
-/* ── Project Detail Modal ── */
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
   const details = [
     { icon: Target, label: 'Problem', text: project.details.problem },
@@ -30,10 +29,8 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
       className="fixed inset-0 z-[200] flex items-center justify-center p-6"
       onClick={onClose}
     >
-      {/* Backdrop */}
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
-      {/* Modal — wide 2-column */}
       <motion.div
         initial={{ opacity: 0, y: 30, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -52,7 +49,6 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
           boxShadow:            '0 40px 100px rgba(0, 0, 0, 0.6), 0 0 80px rgba(192,193,255,0.05)',
         }}
       >
-        {/* Close button */}
         <button
           onClick={onClose}
           className="absolute top-3 right-3 z-20 w-8 h-8 rounded-full flex items-center justify-center
@@ -63,9 +59,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
           <X size={16} />
         </button>
 
-        {/* Two-column content */}
         <div className="flex flex-col md:flex-row">
-          {/* Left column — project info */}
           <div className="md:w-[42%] p-8 space-y-5 border-b md:border-b-0 md:border-r border-white/[0.06]"
                style={{ background: project.imageBg.replace('100%)', '30%)') }}>
             <h3 id="modal-title" className="font-headline text-2xl font-bold text-on-surface">
@@ -98,7 +92,6 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
             </div>
           </div>
 
-          {/* Right column — case study */}
           <div className="md:w-[58%] p-8 space-y-4">
             <p className="font-label text-xs uppercase tracking-[0.15em] text-primary mb-1">Case Study</p>
             {details.map((detail) => {
@@ -132,7 +125,6 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
   )
 }
 
-/* ── Main Projects Section ── */
 export default function ProjectsSection() {
   const ref      = useRef<HTMLElement>(null)
   const isInView = useInView(ref, { once: true, margin: '-80px' })
@@ -150,7 +142,6 @@ export default function ProjectsSection() {
         className="min-h-screen w-full flex items-center relative py-24"
       >
         <Container>
-          {/* Heading */}
           <motion.div
             variants={reduced ? undefined : staggerContainer}
             {...ap}
@@ -167,11 +158,10 @@ export default function ProjectsSection() {
               Featured Work
             </motion.h2>
             <motion.p variants={reduced ? undefined : fadeInUp} className="text-on-surface-variant/75 text-lg max-w-2xl">
-              Production-grade Angular applications built with scalable architecture and optimized performance.
+              Production-grade software applications built with scalable architecture and optimized performance.
             </motion.p>
           </motion.div>
 
-          {/* Cards */}
           <motion.div
             variants={reduced ? undefined : staggerContainer}
             {...ap}
@@ -200,7 +190,6 @@ export default function ProjectsSection() {
                   boxShadow:            '0 8px 40px rgba(0,0,0,0.3)',
                 }}
               >
-                {/* Image / gradient area */}
                 <div
                   className="h-32 lg:h-40 relative overflow-hidden"
                   style={{ background: project.imageBg }}
@@ -208,13 +197,11 @@ export default function ProjectsSection() {
                 >
                   <div className="absolute inset-0 bg-gradient-to-t from-[rgba(8,15,34,0.85)] to-transparent" />
 
-                  {/* Project number watermark */}
                   <div className="absolute top-4 right-5 font-headline font-bold text-6xl"
                     style={{ color: 'rgba(192,193,255,0.08)' }}>
                     0{i + 1}
                   </div>
 
-                  {/* Hover overlay CTA */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/40 backdrop-blur-[2px]">
                     <span className="font-headline text-sm font-bold text-white px-5 py-2.5 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm">
                       View Case Study →
@@ -222,7 +209,6 @@ export default function ProjectsSection() {
                   </div>
                 </div>
 
-                {/* Body */}
                 <div className="p-5 flex flex-col flex-grow gap-4">
                   <div className="space-y-2">
                     <h3 className="font-headline text-xl font-bold text-on-surface group-hover:text-primary transition-colors duration-200">
@@ -233,7 +219,6 @@ export default function ProjectsSection() {
                     </p>
                   </div>
 
-                  {/* Stack */}
                   <div className="flex flex-wrap gap-2 mt-auto">
                     {project.stack.map((tech) => (
                       <span
@@ -245,7 +230,6 @@ export default function ProjectsSection() {
                     ))}
                   </div>
 
-                  {/* Links */}
                   <div
                     className="flex gap-5 pt-4"
                     style={{ borderTop: '1px solid rgba(255,255,255,0.06)' }}
@@ -284,7 +268,6 @@ export default function ProjectsSection() {
         </Container>
       </section>
 
-      {/* ── Modal ── */}
       <AnimatePresence>
         {activeProject && (
           <ProjectModal

@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── Google Fonts already loaded in index.html ─────────── */
-
-/* ── Base Reset ─────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; }
 
 html {
@@ -23,32 +20,25 @@ body {
   overflow-x: hidden;
 }
 
-/* ── Scrollbar ──────────────────────────────────────────── */
 ::-webkit-scrollbar             { width: 5px; }
 ::-webkit-scrollbar-track       { background: #080f22; }
 ::-webkit-scrollbar-thumb       { background: #2d3449; border-radius: 9999px; }
 ::-webkit-scrollbar-thumb:hover { background: #464555; }
 
-/* ── Selection ──────────────────────────────────────────── */
 ::selection {
   background-color: rgba(75, 77, 216, 0.4);
   color: #c0c1ff;
 }
 
-/* ── Focus ──────────────────────────────────────────────── */
 :focus-visible {
   outline: 2px solid #c0c1ff;
   outline-offset: 3px;
 }
 
-/* ── Scroll margin for fixed nav ────────────────────────── */
 section[id] { 
   scroll-margin-top: 80px;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   BACKGROUND ORBS  — floating ambient glows
-   ═══════════════════════════════════════════════════════════ */
 .bg-orbs {
   position: fixed;
   inset: 0;
@@ -113,9 +103,6 @@ section[id] {
   66%       { transform: translateY(20px)   rotate(-2deg);  }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   HERO GRADIENT MESH — animated background for hero section
-   ═══════════════════════════════════════════════════════════ */
 .hero-gradient-mesh {
   position: absolute;
   inset: 0;
@@ -146,9 +133,6 @@ section[id] {
   75%      { transform: translate(1%, 1%) rotate(0.5deg); }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   TYPING CURSOR
-   ═══════════════════════════════════════════════════════════ */
 .typing-cursor {
   display: inline-block;
   width: 3px;
@@ -165,9 +149,6 @@ section[id] {
   50%      { opacity: 0; }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   CODE BLOCK FLOATING ANIMATION
-   ═══════════════════════════════════════════════════════════ */
 .code-float {
   animation: codeFloat 6s ease-in-out infinite;
   will-change: transform;
@@ -178,9 +159,6 @@ section[id] {
   50%      { transform: translateY(-12px) rotate(0.5deg); }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   KEYWORD HIGHLIGHT SHIMMER
-   ═══════════════════════════════════════════════════════════ */
 .keyword-highlight {
   position: relative;
   display: inline;
@@ -206,12 +184,7 @@ section[id] {
   50%      { opacity: 1; transform: translateX(100%); }
 }
 
-/* ═══════════════════════════════════════════════════════════
-   UTILITIES
-   ═══════════════════════════════════════════════════════════ */
 @layer utilities {
-
-  /* Glass panel — core reusable primitive */
   .glass-panel {
     background-color:     rgba(255, 255, 255, 0.04);
     backdrop-filter:      blur(20px);
@@ -220,7 +193,6 @@ section[id] {
     box-shadow:           0 20px 60px rgba(0, 0, 0, 0.35);
   }
 
-  /* Stronger glass for the contact form */
   .glass-panel-strong {
     background-color:     rgba(255, 255, 255, 0.06);
     backdrop-filter:      blur(24px);
@@ -229,7 +201,6 @@ section[id] {
     box-shadow:           0 30px 80px rgba(0, 0, 0, 0.4);
   }
 
-  /* Gradient text */
   .gradient-text {
     background: linear-gradient(135deg, #c0c1ff 0%, #818cf8 60%, #4b4dd8 100%);
     -webkit-background-clip: text;
@@ -237,17 +208,14 @@ section[id] {
     background-clip: text;
   }
 
-  /* Primary gradient fill */
   .gradient-primary {
     background: linear-gradient(135deg, #c0c1ff 0%, #4b4dd8 100%);
   }
 
-  /* Text glow */
   .text-glow {
     text-shadow: 0 0 40px rgba(192, 193, 255, 0.45);
   }
 
-  /* Card hover shadow — premium elevation */
   .card-hover {
     transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
                 box-shadow 0.35s ease,
@@ -261,7 +229,6 @@ section[id] {
       0 0 40px rgba(192, 193, 255, 0.06);
   }
 
-  /* Glow button hover */
   .glow-hover {
     transition: box-shadow 0.3s ease, transform 0.2s ease;
   }
@@ -277,7 +244,6 @@ section[id] {
     box-shadow: none;
   }
 
-  /* Skill chip — upgraded with glow hover */
   .skill-chip {
     background: rgba(192, 193, 255, 0.08);
     border:     1px solid rgba(192, 193, 255, 0.14);
@@ -292,13 +258,11 @@ section[id] {
     transform:    translateY(-1px);
   }
 
-  /* Section entrance fade — used as CSS class for initial hidden state */
   .fade-section {
     opacity: 0;
     transform: translateY(32px);
   }
 
-  /* Floating label for inputs */
   .input-premium {
     position: relative;
     transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
@@ -310,7 +274,6 @@ section[id] {
     border-color: rgba(192, 193, 255, 0.5);
   }
 
-  /* Gradient border wrapper */
   .gradient-border {
     position: relative;
     border-radius: 1.5rem;

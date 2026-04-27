@@ -8,7 +8,6 @@ import ContactSection from './components/sections/ContactSection'
 export default function App() {
   return (
     <>
-      {/* Skip to content */}
       <a
         href="#main-content"
         className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-xl focus:bg-primary focus:text-on-primary focus:font-headline focus:font-bold focus:outline-none"
@@ -16,7 +15,6 @@ export default function App() {
         Skip to content
       </a>
 
-      {/* ── Floating ambient background orbs ── */}
       <div className="bg-orbs" aria-hidden="true">
         <div className="orb orb-purple"  />
         <div className="orb orb-indigo"  />
@@ -24,10 +22,8 @@ export default function App() {
         <div className="orb orb-pink"    />
       </div>
 
-      {/* ── Navigation ── */}
       <Navbar />
 
-      {/* ── Page content ── */}
       <main id="main-content" className="relative z-10">
         <HeroSection    />
         <AboutSection   />

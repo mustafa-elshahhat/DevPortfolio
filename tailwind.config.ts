@@ -6,7 +6,6 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Surface hierarchy (from mock UI)
         'surface':               '#0b1326',
         'surface-dim':           '#0b1326',
         'surface-bright':        '#31394d',
@@ -16,31 +15,24 @@ const config: Config = {
         'surface-container-high':'#222a3d',
         'surface-container-highest': '#2d3449',
         'surface-variant':       '#2d3449',
-        // Text
         'on-surface':            '#dae2fd',
         'on-surface-variant':    '#c7c4d8',
-        // Primary accent
         'primary':               '#c0c1ff',
         'primary-container':     '#4b4dd8',
         'on-primary':            '#1000a9',
         'on-primary-container':  '#d9d8ff',
-        // Secondary
         'secondary':             '#c3c0ff',
         'secondary-container':   '#413f82',
         'on-secondary':          '#2a276a',
         'on-secondary-container':'#b0aef9',
-        // Outline
         'outline':               '#918fa1',
         'outline-variant':       '#464555',
-        // Background
         'background':            '#0b1326',
         'on-background':         '#dae2fd',
-        // Error
         'error':                 '#ffb4ab',
         'error-container':       '#93000a',
         'on-error':              '#690005',
         'on-error-container':    '#ffdad6',
-        // Success (custom)
         'success':               '#22c55e',
       },
       fontFamily: {

@@ -1,4 +1,4 @@
-import { Code2, Mail, Phone } from 'lucide-react'
+import { Code2, Mail } from 'lucide-react'
 import type { LucideIcon } from 'lucide-react'
 
 export interface SocialLink {
@@ -9,19 +9,13 @@ export interface SocialLink {
 
 export const socialLinks: SocialLink[] = [
   {
-    label: 'Phone',
-    href:  'tel:+201097673063',
-    icon:  Phone,
-  },
-  {
     label: 'GitHub',
     href:  'https://github.com/mustafaelshahhat-art',
     icon:  Code2,
   },
-
   {
     label: 'Email',
-    href:  'mailto:mustafaelshhahat@gmail.com',
+    href:  'mailto:mustafaelshahhat@gmail.com',
     icon:  Mail,
   },
 ]

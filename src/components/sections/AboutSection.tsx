@@ -7,7 +7,7 @@ import Container from '../ui/Container'
 const FOCUS_AREAS = [
   { icon: '⚡', title: 'Performance', desc: 'Optimized rendering & change detection' },
   { icon: '🏗️', title: 'Architecture', desc: 'Scalable, modular component systems' },
-  { icon: '🔄', title: 'State Mgmt', desc: 'RxJS, NgRx, and Signals patterns' },
+  { icon: '🔄', title: 'State Mgmt', desc: 'Reactive state management patterns' },
   { icon: '🎨', title: 'UI Systems', desc: 'Design systems & responsive layouts' },
 ]
 
@@ -27,7 +27,6 @@ export default function AboutSection() {
       aria-labelledby="about-heading"
       className="min-h-screen w-full flex items-center bg-surface relative overflow-hidden py-24"
     >
-      {/* Background glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -42,7 +41,6 @@ export default function AboutSection() {
           {...animProps}
           className="flex flex-col lg:flex-row items-center gap-16 lg:gap-24"
         >
-          {/* Left: Visual — upgraded with focus area cards */}
           <motion.div
             variants={fadeInLeft}
             className="flex-shrink-0 w-full lg:w-80 xl:w-96"
@@ -72,7 +70,6 @@ export default function AboutSection() {
             </div>
           </motion.div>
 
-          {/* Right: Text */}
           <motion.div variants={fadeInRight} className="flex-1 space-y-6">
             <motion.div variants={staggerContainer} {...animProps}>
               <SectionHeading
@@ -92,12 +89,8 @@ export default function AboutSection() {
               <motion.p variants={fadeInUp} className="text-on-surface-variant leading-relaxed">
                 My approach emphasizes performance optimization, scalable component architecture, clean and maintainable codebases, and real-world production readiness.
               </motion.p>
-              <motion.p variants={fadeInUp} className="text-on-surface-variant leading-relaxed">
-                I also leverage AI-assisted development (Vibe Coding) to accelerate delivery while maintaining engineering standards.
-              </motion.p>
             </motion.div>
 
-            {/* Stats row */}
             <motion.div
               variants={fadeInUp}
               className="flex flex-wrap gap-8 pt-6"

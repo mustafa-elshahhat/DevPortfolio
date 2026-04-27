@@ -18,8 +18,6 @@ export default function SkillsSection() {
       className="min-h-screen w-full flex items-center relative py-24"
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-8">
-
-        {/* ── Heading ─────────────────────────────────────── */}
         <motion.div
           variants={reduced ? undefined : staggerContainer}
           {...ap}
@@ -44,11 +42,10 @@ export default function SkillsSection() {
             variants={reduced ? undefined : fadeInUp}
             className="text-on-surface-variant/75 text-lg max-w-xl mx-auto"
           >
-            The tools and technologies I use daily to architect high-performance Angular applications.
+            The tools and technologies I use daily to architect high-performance software applications.
           </motion.p>
         </motion.div>
 
-        {/* ── Skill cards ─────────────────────────────────── */}
         <motion.div
           variants={reduced ? undefined : staggerContainer}
           {...ap}
@@ -70,7 +67,6 @@ export default function SkillsSection() {
                   boxShadow:            '0 8px 40px rgba(0, 0, 0, 0.3)',
                 }}
               >
-                {/* Corner accent glow */}
                 <div
                   className="absolute top-0 right-0 w-24 h-24 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                   style={{
@@ -79,7 +75,6 @@ export default function SkillsSection() {
                   aria-hidden="true"
                 />
 
-                {/* Icon circle */}
                 <div
                   className="w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-110 group-hover:shadow-glow-sm"
                   style={{
@@ -95,19 +90,16 @@ export default function SkillsSection() {
                   />
                 </div>
 
-                {/* Category title */}
                 <h3 className="font-headline text-lg font-bold text-on-surface tracking-tight">
                   {cat.label}
                 </h3>
 
-                {/* Divider */}
                 <div
                   className="h-px w-full"
                   style={{ background: 'rgba(255,255,255,0.06)' }}
                   aria-hidden="true"
                 />
 
-                {/* Skills list */}
                 <div className="flex flex-wrap gap-2">
                   {cat.skills.map((skill) => (
                     <span
@@ -119,7 +111,6 @@ export default function SkillsSection() {
                   ))}
                 </div>
 
-                {/* Bottom gradient line on hover */}
                 <div
                   className="absolute bottom-0 left-0 right-0 h-[2px] rounded-b-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                   style={{

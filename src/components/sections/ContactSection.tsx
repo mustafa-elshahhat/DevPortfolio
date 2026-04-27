@@ -3,7 +3,7 @@ import { useRef, useState } from 'react'
 import { useForm, type UseFormRegisterReturn } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
-import { CheckCircle, AlertCircle, Send, Phone, Mail } from 'lucide-react'
+import { CheckCircle, AlertCircle, Send, Mail } from 'lucide-react'
 import { staggerContainer, fadeInUp } from '../../lib/motion'
 import { socialLinks } from '../../data/social'
 import { cn } from '../../lib/utils'
@@ -20,7 +20,6 @@ type SubmitState = 'idle' | 'submitting' | 'success' | 'error'
 
 const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined
 
-/* ── Floating Label Input ── */
 function FloatingInput({
   id, label, type = 'text', error, disabled, registration,
 }: {
@@ -93,7 +92,6 @@ function FloatingInput({
   )
 }
 
-/* ── Floating Label Textarea ── */
 function FloatingTextarea({
   id, label, error, disabled, registration,
 }: {
@@ -186,7 +184,7 @@ export default function ContactSection() {
 
   const onSubmit = async (data: ContactFormData) => {
     if (!FORMSPREE_ENDPOINT) {
-      window.open(`mailto:mustafaelshhahat@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(data.message)}`, '_self')
+      window.open(`mailto:mustafaelshahhat@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(data.message)}`, '_self')
       setSubmitState('success')
       reset()
       return
@@ -217,7 +215,6 @@ export default function ContactSection() {
       aria-labelledby="contact-heading"
       className="min-h-screen w-full flex items-center bg-surface relative overflow-hidden py-24"
     >
-      {/* Background glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
@@ -227,20 +224,17 @@ export default function ContactSection() {
       />
 
       <div className="relative max-w-4xl mx-auto px-4 sm:px-8">
-        {/* Glass container */}
         <motion.div
           variants={prefersReducedMotion ? undefined : staggerContainer}
           {...animProps}
           className="glass-panel-strong p-6 md:p-8 rounded-3xl relative overflow-hidden gradient-border"
         >
-          {/* Ambient glow top-right */}
           <div
             className="absolute -top-24 -right-24 w-64 h-64 rounded-full pointer-events-none"
             style={{ background: 'radial-gradient(circle, rgba(192,193,255,0.08) 0%, transparent 70%)' }}
             aria-hidden="true"
           />
 
-          {/* Heading */}
           <motion.div variants={fadeInUp} className="space-y-2 mb-6">
             <p className="font-label text-xs uppercase tracking-[0.15em] text-primary">
               04 / Contact
@@ -249,34 +243,23 @@ export default function ContactSection() {
               Let&apos;s Work Together
             </h2>
             <p className="text-on-surface-variant">
-              Have a project in mind or looking for a senior front-end engineer?
+              Have a project in mind or looking for a front-end engineer?
               I&apos;d love to hear from you. Let&apos;s build something exceptional.
             </p>
           </motion.div>
 
-          {/* Direct contact info */}
           <motion.div variants={fadeInUp} className="flex flex-wrap gap-6 mb-6">
             <a
-              href="tel:+201097673063"
-              className="flex items-center gap-2.5 text-on-surface-variant/70 hover:text-primary transition-colors duration-200 group"
-            >
-              <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-surface-container-high group-hover:bg-primary/10 transition-colors duration-200">
-                <Phone size={16} className="text-primary" aria-hidden="true" />
-              </div>
-              <span className="font-label text-sm">01097673063</span>
-            </a>
-            <a
-              href="mailto:mustafaelshhahat@gmail.com"
+              href="mailto:mustafaelshahhat@gmail.com"
               className="flex items-center gap-2.5 text-on-surface-variant/70 hover:text-primary transition-colors duration-200 group"
             >
               <div className="w-9 h-9 rounded-xl flex items-center justify-center bg-surface-container-high group-hover:bg-primary/10 transition-colors duration-200">
                 <Mail size={16} className="text-primary" aria-hidden="true" />
               </div>
-              <span className="font-label text-sm">mustafaelshhahat@gmail.com</span>
+              <span className="font-label text-sm">mustafaelshahhat@gmail.com</span>
             </a>
           </motion.div>
 
-          {/* Social links — only GitHub & LinkedIn (phone/email shown above) */}
           <motion.div variants={fadeInUp} className="flex gap-4 mb-6">
             {socialLinks.filter(l => l.label === 'GitHub' || l.label === 'LinkedIn').map((link) => {
               const Icon = link.icon
@@ -296,7 +279,6 @@ export default function ContactSection() {
             })}
           </motion.div>
 
-          {/* Form */}
           <AnimatePresence mode="wait">
             {submitState === 'success' ? (
               <motion.div
@@ -307,7 +289,6 @@ export default function ContactSection() {
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
                 className="flex flex-col items-center justify-center gap-5 py-16 text-center"
               >
-                {/* Animated success ring */}
                 <motion.div
                   initial={{ scale: 0, rotate: -180 }}
                   animate={{ scale: 1, rotate: 0 }}
@@ -356,7 +337,6 @@ export default function ContactSection() {
                 noValidate
                 className="space-y-4"
               >
-                {/* Name + Email row */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <FloatingInput
                     id="name"
@@ -375,7 +355,6 @@ export default function ContactSection() {
                   />
                 </div>
 
-                {/* Message */}
                 <FloatingTextarea
                   id="message"
                   label="Your Message"
@@ -384,7 +363,6 @@ export default function ContactSection() {
                   registration={register('message')}
                 />
 
-                {/* Error banner */}
                 {submitState === 'error' && (
                   <motion.div
                     initial={{ opacity: 0, y: -8 }}
@@ -397,7 +375,6 @@ export default function ContactSection() {
                   </motion.div>
                 )}
 
-                {/* Submit */}
                 <button
                   type="submit"
                   disabled={isSubmitting}

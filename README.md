@@ -1,12 +1,12 @@
-# Mostafa Elshahat - Professional Portfolio
+# Mostafa Elshahat - Portfolio
 
-A clean, modern, and responsive professional portfolio website built with React, TypeScript, and Vite. Designed to showcase my development projects, skills, and experience with a polished UI and smooth animations.
+A clean, modern, and responsive portfolio website built with React, TypeScript, and Vite. Designed to showcase my development projects, skills, and experience with a polished UI and smooth animations.
 
 ## Features
 - **Responsive Layout**: Adapts seamlessly to mobile, tablet, and desktop screens.
 - **Modern UI/UX**: Uses glassmorphism, gradient meshes, and Framer Motion for smooth animations and transitions.
 - **Accessible Design**: Keyboard-navigable project modals and semantic HTML structure.
-- **Dynamic Projects Showcase**: A dedicated section to highlight key projects, technologies used, and detailed case studies.
+- **Dynamic Projects Showcase**: A dedicated section to highlight key projects and technologies used.
 - **Contact Form Integration**: A fully functional contact form to get in touch directly from the site.
 
 ## Tech Stack
@@ -38,8 +38,8 @@ A clean, modern, and responsive professional portfolio website built with React,
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/mustafaelshahhat-art/mostafa-portfolio.git
-   cd mostafa-portfolio
+   git clone https://github.com/mustafaelshahhat-art/DevPortfolio.git
+   cd DevPortfolio
    ```
 
 2. **Install dependencies:**
@@ -48,7 +48,7 @@ A clean, modern, and responsive professional portfolio website built with React,
    ```
 
 3. **Set up environment variables:**
-   Create a `.env` file in the root directory and add your Formspree endpoint (or any other form provider endpoint) to enable the contact form submission. If omitted, the form will gracefully fallback to opening your default email client.
+   Create a `.env` file in the root directory and add your Formspree endpoint. If `VITE_FORMSPREE_ENDPOINT` is not configured, the contact form will fall back to a `mailto` link.
    ```env
    VITE_FORMSPREE_ENDPOINT=https://formspree.io/f/your_endpoint_here
    ```
@@ -62,6 +62,3 @@ A clean, modern, and responsive professional portfolio website built with React,
    ```bash
    npm run build
    ```
-
-## License
-This project is open source and available .
