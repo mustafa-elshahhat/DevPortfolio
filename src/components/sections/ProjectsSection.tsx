@@ -9,6 +9,7 @@ import Container from '../ui/Container'
 function ProjectModal({ project, onClose }: { project: Project; onClose: () => void }) {
   const gallery = project.gallery ?? [project.imageUrl]
   const [activeImage, setActiveImage] = useState(gallery[0])
+  const dialogRef = useRef<HTMLDivElement>(null)
 
   const details = [
     { icon: Target, label: 'Problem', text: project.details.problem },
@@ -23,13 +24,53 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
     window.dispatchEvent(new Event('project-modal-open'))
     document.body.style.overflow = 'hidden'
 
+    // Remember what was focused (the card's trigger button) so focus can be
+    // restored when the modal closes.
+    const previouslyFocused = document.activeElement as HTMLElement | null
+
+    const getFocusable = () =>
+      Array.from(
+        dialogRef.current?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), input, textarea, select, [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      ).filter((el) => el.offsetParent !== null)
+
+    // Move focus into the modal once it has mounted.
+    const focusTimer = requestAnimationFrame(() => {
+      const focusable = getFocusable()
+      ;(focusable[0] ?? dialogRef.current)?.focus()
+    })
+
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') onClose()
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+      if (e.key === 'Tab') {
+        // Trap Tab / Shift+Tab inside the dialog.
+        const focusable = getFocusable()
+        if (focusable.length === 0) {
+          e.preventDefault()
+          return
+        }
+        const first = focusable[0]
+        const last  = focusable[focusable.length - 1]
+        const active = document.activeElement
+        if (e.shiftKey && (active === first || !dialogRef.current?.contains(active))) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && active === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
     }
     window.addEventListener('keydown', handleKeyDown)
     return () => {
+      cancelAnimationFrame(focusTimer)
       window.removeEventListener('keydown', handleKeyDown)
       document.body.style.overflow = ''
+      previouslyFocused?.focus?.()
     }
   }, [onClose])
 
@@ -47,6 +88,7 @@ function ProjectModal({ project, onClose }: { project: Project; onClose: () => v
       <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
 
       <motion.div
+        ref={dialogRef}
         initial={{ opacity: 0, y: 30, scale: 0.96 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 15, scale: 0.97 }}
@@ -233,16 +275,7 @@ export default function ProjectsSection() {
                 key={project.id}
                 variants={reduced ? undefined : scaleIn}
                 custom={i}
-                onClick={() => setActiveProject(project)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault()
-                    setActiveProject(project)
-                  }
-                }}
-                className="group flex flex-col rounded-3xl overflow-hidden card-hover cursor-pointer gradient-border"
+                className="group flex flex-col rounded-3xl overflow-hidden card-hover gradient-border"
                 style={{
                   background:           'rgba(255, 255, 255, 0.04)',
                   backdropFilter:       'blur(16px)',
@@ -251,8 +284,11 @@ export default function ProjectsSection() {
                   boxShadow:            '0 8px 40px rgba(0,0,0,0.3)',
                 }}
               >
-                <div
-                  className="aspect-[16/9] relative overflow-hidden"
+                <button
+                  type="button"
+                  onClick={() => setActiveProject(project)}
+                  aria-label={`View case study for ${project.title}`}
+                  className="block w-full aspect-[16/9] relative overflow-hidden cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-inset"
                   style={{ background: project.imageBg }}
                 >
                   <img
@@ -275,7 +311,7 @@ export default function ProjectsSection() {
                       View Case Study →
                     </span>
                   </div>
-                </div>
+                </button>
 
                 <div className="p-5 flex flex-col flex-grow gap-4">
                   <div className="space-y-2">
@@ -309,7 +345,6 @@ export default function ProjectsSection() {
                         rel="noopener noreferrer"
                         aria-label={`Live demo of ${project.title}`}
                         className="flex items-center gap-1.5 text-primary hover:text-on-primary-container font-headline font-semibold text-sm transition-colors duration-200"
-                        onClick={(e) => e.stopPropagation()}
                       >
                         Live Demo
                         <ExternalLink size={13} aria-hidden="true" />
@@ -322,7 +357,6 @@ export default function ProjectsSection() {
                         rel="noopener noreferrer"
                         aria-label={`GitHub repo for ${project.title}`}
                         className="flex items-center gap-1.5 text-on-surface-variant/60 hover:text-on-surface font-headline font-semibold text-sm transition-colors duration-200"
-                        onClick={(e) => e.stopPropagation()}
                       >
                         Code
                         <Code2 size={13} aria-hidden="true" />

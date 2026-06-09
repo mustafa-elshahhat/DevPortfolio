@@ -6,22 +6,6 @@ import { socialLinks } from '../../data/social'
 import Button from '../ui/Button'
 import IconLink from '../ui/IconLink'
 
-const CODE_SNIPPET = `const developer = {
-  name: "Mostafa",
-  role: "CS Student · Full-Stack .NET",
-  stack: [
-    "ASP.NET Core",
-    "C#",
-    "Angular",
-    "SQL Server"
-  ],
-  focus: "REST APIs, Databases & Responsive UI",
-  build() {
-    return this.focus
-      + this.stack;
-  }
-};`
-
 const KEYWORDS = ['ASP.NET Core', 'C#', 'Angular', 'SQL Server', 'REST APIs']
 
 function useTypewriter(words: string[], typingSpeed = 80, deletingSpeed = 50, pauseDuration = 2000) {
@@ -84,7 +68,7 @@ export default function HeroSection() {
             {...ip}
             className="font-label text-sm tracking-[0.08em] text-primary font-medium"
           >
-            Mostafa Elshahat Elsayed Abdelaziz
+            Moustafa Elshahhat Elsayed Abdelaziz
           </motion.p>
 
           <motion.h1
@@ -161,10 +145,10 @@ export default function HeroSection() {
 
         <motion.div
           {...rp}
-          className="flex-1 hidden lg:flex justify-center w-full max-w-md"
+          className="order-first lg:order-none flex-1 flex justify-center w-full max-w-[260px] sm:max-w-xs lg:max-w-md"
         >
           <div
-            className="code-float w-full rounded-3xl p-7 relative overflow-hidden gradient-border"
+            className="code-float w-full rounded-3xl p-3 relative overflow-hidden gradient-border"
             style={{
               background:           'rgba(255, 255, 255, 0.04)',
               backdropFilter:       'blur(20px)',
@@ -173,16 +157,16 @@ export default function HeroSection() {
               boxShadow:            '0 30px 80px rgba(0, 0, 0, 0.4), 0 0 60px rgba(192,193,255,0.06)',
             }}
           >
-            <div className="flex gap-2 mb-6" aria-hidden="true">
-              <div className="w-3 h-3 rounded-full bg-[#ff605c]" />
-              <div className="w-3 h-3 rounded-full bg-[#ffbd44]" />
-              <div className="w-3 h-3 rounded-full bg-[#00ca4e]" />
-            </div>
-
-            <pre className="font-mono text-[13px] leading-relaxed overflow-hidden"
-              style={{ color: 'rgba(192,193,255, 0.78)' }}>
-              <code>{CODE_SNIPPET}</code>
-            </pre>
+            <img
+              src="/images/hero/moustafa-elshahhat-hero.png"
+              alt="Moustafa Elshahhat, Computer Science student and full-stack .NET developer"
+              width={1122}
+              height={1402}
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+              className="w-full h-auto rounded-2xl object-cover aspect-[1122/1402]"
+            />
 
             <div
               className="absolute -bottom-10 -right-10 w-48 h-48 rounded-full pointer-events-none"

@@ -16,7 +16,7 @@ const contactSchema = z.object({
 })
 
 type ContactFormData = z.infer<typeof contactSchema>
-type SubmitState = 'idle' | 'submitting' | 'success' | 'error'
+type SubmitState = 'idle' | 'submitting' | 'success' | 'error' | 'mailto'
 
 const FORMSPREE_ENDPOINT = import.meta.env.VITE_FORMSPREE_ENDPOINT as string | undefined
 
@@ -184,9 +184,12 @@ export default function ContactSection() {
 
   const onSubmit = async (data: ContactFormData) => {
     if (!FORMSPREE_ENDPOINT) {
-      window.open(`mailto:mustafaelshahhat@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(data.message)}`, '_self')
-      setSubmitState('success')
-      reset()
+      // No backend configured: hand the message off to the user's email client.
+      // We cannot confirm delivery, so we show a neutral status rather than a
+      // misleading "sent successfully" message, and we keep the form filled in
+      // case the mail client never opens.
+      window.open(`mailto:mustafaelshahhat@gmail.com?subject=Portfolio Contact from ${encodeURIComponent(data.name)}&body=${encodeURIComponent(data.message)}`, '_blank')
+      setSubmitState('mailto')
       return
     }
 
@@ -362,6 +365,18 @@ export default function ContactSection() {
                   disabled={isSubmitting}
                   registration={register('message')}
                 />
+
+                {submitState === 'mailto' && (
+                  <motion.div
+                    initial={{ opacity: 0, y: -8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    role="status"
+                    className="flex items-center gap-2 text-primary text-sm p-3 bg-primary/10 border border-primary/20 rounded-xl"
+                  >
+                    <Mail size={16} aria-hidden="true" />
+                    Opening your email client… If nothing happens, email me directly at mustafaelshahhat@gmail.com.
+                  </motion.div>
+                )}
 
                 {submitState === 'error' && (
                   <motion.div

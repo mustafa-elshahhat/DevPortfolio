@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-8 py-4 md:py-6 flex flex-col md:flex-row items-center justify-between gap-4">
         {/* Logo */}
         <div className="font-headline font-bold text-xl text-primary tracking-tight">
-          Mostafa Elshahat
+          Moustafa Elshahhat
         </div>
 
         {/* Social links */}
@@ -32,7 +32,7 @@ export default function Footer() {
 
         {/* Copyright */}
         <p className="text-on-surface-variant/60 text-xs font-label tracking-wide text-center">
-          © {year} Mostafa Elshahat. Crafted with precision.
+          © {year} Moustafa Elshahhat. Crafted with precision.
         </p>
       </div>
     </footer>

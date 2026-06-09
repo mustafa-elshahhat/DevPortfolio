@@ -108,7 +108,7 @@ export default function Navbar() {
           onClick={(e) => { e.preventDefault(); handleNavClick('#hero') }}
           className="font-headline font-bold text-lg tracking-tight text-primary hover:opacity-80 transition-opacity shrink-0"
         >
-          Mostafa Elshahat
+          Moustafa Elshahhat
         </a>
 
         {/* ── Center glass pill ── */}
