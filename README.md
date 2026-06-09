@@ -1,4 +1,4 @@
-# Moustafa Elshahhat - Portfolio
+# Mustafa Elshahhat - Portfolio
 
 A clean, modern, and responsive portfolio website built with React, TypeScript, and Vite. It presents me as a Computer Science student on a full-stack .NET development track (ASP.NET Core • Angular • SQL Server), showcasing my projects, skills, and experience with a polished UI and smooth animations.
 
@@ -38,7 +38,7 @@ A clean, modern, and responsive portfolio website built with React, TypeScript, 
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/moustafa-elshahhat/DevPortfolio.git
+   git clone https://github.com/mustafa-elshahhat/DevPortfolio.git
    cd DevPortfolio
    ```
 

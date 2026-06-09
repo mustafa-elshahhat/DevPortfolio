@@ -23,7 +23,7 @@ export const projects: Project[] = [
     description: 'Full-stack e-commerce platform for medical scrubs and uniforms, built on an ASP.NET Core (.NET) minimal-API backend with Entity Framework Core and SQL Server, and a React + TypeScript front-end. Includes JWT authentication, an order lifecycle with payment-proof verification, inventory with size/color variants, and a role-based admin dashboard. Supports Arabic (RTL) and English.',
     stack:       ['ASP.NET Core', 'C#', 'EF Core', 'SQL Server', 'React', 'TypeScript'],
     liveUrl:     'https://www.drmirrorscrubs.store/',
-    githubUrl:   'https://github.com/moustafa-elshahhat/Dr_Mirror',
+    githubUrl:   'https://github.com/mustafa-elshahhat/Dr_Mirror',
     imageBg:     'linear-gradient(135deg, #03363d 0%, #0a5c66 50%, #11808f 100%)',
     imageUrl:    '/images/projects/dr-mirror-cover.webp',
     gallery: [
@@ -46,7 +46,7 @@ export const projects: Project[] = [
     description: 'Full-stack accessories e-commerce site with an Angular + TypeScript front-end and an ASP.NET Core (.NET) backend using Entity Framework Core and SQL Server. Customers buy products or assemble custom gift boxes; features JWT auth, an admin dashboard for products, orders and inventory, and automated WhatsApp order notifications via a separate microservice.',
     stack:       ['ASP.NET Core', 'C#', 'EF Core', 'SQL Server', 'Angular', 'TypeScript'],
     liveUrl:     'https://soulmate-accessories-store.vercel.app/',
-    githubUrl:   'https://github.com/moustafa-elshahhat/Soulmate-Accessories-Store',
+    githubUrl:   'https://github.com/mustafa-elshahhat/Soulmate-Accessories-Store',
     imageBg:     'linear-gradient(135deg, #4a0018 0%, #800020 50%, #b3003b 100%)',
     imageUrl:    '/images/projects/soulmate-builder.webp',
     gallery: [
@@ -68,7 +68,7 @@ export const projects: Project[] = [
     title:       'WhatsApp Service Template',
     description: 'Standalone WhatsApp messaging microservice in Node.js and Express, using the Baileys WhatsApp Web client with MongoDB-backed sessions. Exposes a REST API (health, status, pairing, send, session) any backend can call to send notifications, with API-key auth, request validation, rate limiting, and a circuit breaker for resilience.',
     stack:       ['Node.js', 'Express', 'JavaScript', 'MongoDB', 'REST API'],
-    githubUrl:   'https://github.com/moustafa-elshahhat/whatsapp-service-template',
+    githubUrl:   'https://github.com/mustafa-elshahhat/whatsapp-service-template',
     imageBg:     'linear-gradient(135deg, #04361f 0%, #0a5c2e 50%, #128c3e 100%)',
     imageUrl:    '/images/projects/whatsapp-service-cover.webp',
     gallery: [
@@ -86,7 +86,7 @@ export const projects: Project[] = [
     title:       'MoonWatch',
     description: 'Synchronized IPTV watch-party app: a Flutter/Dart client (BLoC state, media_kit playback) paired with an ASP.NET Core (.NET) SignalR backend that keeps every viewer’s playhead in sync via room codes. Integrates the Xtream Codes API for live, on-demand and series content, and stores IPTV credentials securely on-device.',
     stack:       ['Flutter', 'Dart', 'ASP.NET Core', 'C#', 'SignalR'],
-    githubUrl:   'https://github.com/moustafa-elshahhat/MoonWatch',
+    githubUrl:   'https://github.com/mustafa-elshahhat/MoonWatch',
     imageBg:     'linear-gradient(135deg, #001833 0%, #003366 50%, #00488a 100%)',
     imageUrl:    '/images/projects/moonwatch-cover.webp',
     gallery: [
@@ -106,7 +106,7 @@ export const projects: Project[] = [
     title:       'Lap Service POS',
     description: 'Windows desktop point-of-sale and service-management system for laptop and printer repair workshops, built in C# with WPF (.NET) over a layered architecture and a local SQLite database. Combines POS sales, repair work-order tracking, spare-parts inventory, customer credit, returns, expenses, and financial reporting with role-based access.',
     stack:       ['C#', 'WPF', '.NET', 'SQLite'],
-    githubUrl:   'https://github.com/moustafa-elshahhat/Lap_Service_POS',
+    githubUrl:   'https://github.com/mustafa-elshahhat/Lap_Service_POS',
     imageBg:     'linear-gradient(135deg, #1f2937 0%, #374151 50%, #4b5563 100%)',
     imageUrl:    '/images/projects/lap-service-pos-reports.webp',
     gallery: [
@@ -126,7 +126,7 @@ export const projects: Project[] = [
     title:       'AutoParts POS',
     description: 'Windows desktop inventory and point-of-sale system for auto-parts retail shops, built in C# with WPF (.NET) and SQLite using a layered (Domain/Application/Infrastructure/Presentation) architecture. Handles inventory with purchase costs and suppliers, cash and credit sales, customer credit accounts, returns with stock adjustment, expense tracking, and profitability reporting.',
     stack:       ['C#', 'WPF', '.NET', 'SQLite'],
-    githubUrl:   'https://github.com/moustafa-elshahhat/AutoParts-POS',
+    githubUrl:   'https://github.com/mustafa-elshahhat/AutoParts-POS',
     imageBg:     'linear-gradient(135deg, #3d1b04 0%, #7a3608 50%, #bd530d 100%)',
     imageUrl:    '/images/projects/autoparts-pos-sales.webp',
     gallery: [
@@ -147,7 +147,7 @@ export const projects: Project[] = [
     title:       'BookNest E-Library',
     description: 'Static digital-library web app built with vanilla HTML, CSS and JavaScript (no frameworks). Browse and search a catalog by title, author or category with client-side filtering, dynamic book-detail rendering with SVG cover fallbacks, query-parameter routing, and a mobile-first responsive CSS Grid layout.',
     stack:       ['HTML', 'CSS', 'JavaScript'],
-    githubUrl:   'https://github.com/moustafa-elshahhat/E-Library-WebApp',
+    githubUrl:   'https://github.com/mustafa-elshahhat/E-Library-WebApp',
     imageBg:     'linear-gradient(135deg, #1a0533 0%, #2d1060 50%, #0f2060 100%)',
     imageUrl:    '/images/projects/booknest-cover.webp',
     gallery: [

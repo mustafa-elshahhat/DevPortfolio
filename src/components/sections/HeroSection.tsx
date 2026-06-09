@@ -73,7 +73,7 @@ export default function HeroSection() {
               className="h-px w-8 shrink-0 bg-gradient-to-r from-primary via-primary/60 to-transparent"
               aria-hidden="true"
             />
-            Moustafa Elshahhat Elsayed Abdelaziz
+            Mustafa Elshahhat Elsayed Abdelaziz
           </motion.p>
 
           <motion.h1
@@ -165,7 +165,7 @@ export default function HeroSection() {
           >
             <img
               src="/images/hero/moustafa-elshahhat-hero.webp"
-              alt="Moustafa Elshahhat, Computer Science student and full-stack .NET developer"
+              alt="Mustafa Elshahhat, Computer Science student and full-stack .NET developer"
               width={1122}
               height={1402}
               loading="eager"
