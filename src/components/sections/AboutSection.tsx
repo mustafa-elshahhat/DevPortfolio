@@ -70,7 +70,7 @@ export default function AboutSection() {
             </div>
           </motion.div>
 
-          <motion.div variants={fadeInRight} className="flex-1 space-y-6">
+          <motion.div variants={fadeInRight} className="flex-1 min-w-0 space-y-6">
             <motion.div variants={staggerContainer} {...animProps}>
               <SectionHeading
                 eyebrow="01 / About"

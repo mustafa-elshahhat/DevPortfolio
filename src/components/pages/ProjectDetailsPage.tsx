@@ -1,6 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { motion, useReducedMotion } from 'framer-motion'
-import { ArrowLeft, ExternalLink, Target, Zap, Layers, Gauge } from 'lucide-react'
+import {
+  ArrowLeft, ExternalLink, Target, Zap, Layers, Gauge,
+  Maximize2, X, ChevronLeft, ChevronRight,
+} from 'lucide-react'
 import { projects, type Project } from '../../data/projects'
 import { Link } from '../../lib/Link'
 import Container from '../ui/Container'
@@ -27,10 +30,165 @@ function BackToProjects() {
   )
 }
 
+/* Lightweight fullscreen screenshot viewer: dialog semantics, Escape /
+   backdrop / close-button dismissal, arrow-key navigation, a minimal Tab
+   trap across its buttons, and body scroll-lock while open. */
+function ImageLightbox({
+  title,
+  gallery,
+  index,
+  onClose,
+  onNavigate,
+  reduced,
+}: {
+  title: string
+  gallery: string[]
+  index: number
+  onClose: () => void
+  onNavigate: (nextIndex: number) => void
+  reduced: boolean
+}) {
+  const dialogRef = useRef<HTMLDivElement>(null)
+  const closeRef = useRef<HTMLButtonElement>(null)
+  const multiple = gallery.length > 1
+
+  useEffect(() => {
+    closeRef.current?.focus()
+  }, [])
+
+  // Lock body scroll, compensating for the scrollbar to avoid layout shift.
+  useEffect(() => {
+    const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth
+    const prevOverflow = document.body.style.overflow
+    const prevPadding = document.body.style.paddingRight
+    document.body.style.overflow = 'hidden'
+    if (scrollbarWidth > 0) document.body.style.paddingRight = `${scrollbarWidth}px`
+    return () => {
+      document.body.style.overflow = prevOverflow
+      document.body.style.paddingRight = prevPadding
+    }
+  }, [])
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        onClose()
+        return
+      }
+      if (multiple && e.key === 'ArrowRight') {
+        onNavigate((index + 1) % gallery.length)
+        return
+      }
+      if (multiple && e.key === 'ArrowLeft') {
+        onNavigate((index - 1 + gallery.length) % gallery.length)
+        return
+      }
+      if (e.key === 'Tab') {
+        const focusables = dialogRef.current?.querySelectorAll<HTMLElement>('button')
+        if (!focusables || focusables.length === 0) return
+        const first = focusables[0]
+        const last = focusables[focusables.length - 1]
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    }
+    window.addEventListener('keydown', onKeyDown)
+    return () => window.removeEventListener('keydown', onKeyDown)
+  }, [index, gallery.length, multiple, onClose, onNavigate])
+
+  const controlClass =
+    'flex items-center justify-center w-11 h-11 rounded-full bg-white/[0.08] border border-white/15 ' +
+    'text-on-surface backdrop-blur-md transition-colors duration-200 hover:bg-white/[0.18] ' +
+    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary'
+
+  return (
+    <motion.div
+      ref={dialogRef}
+      role="dialog"
+      aria-modal="true"
+      aria-label={`${title} screenshot — full-size preview`}
+      onClick={onClose}
+      {...(reduced
+        ? {}
+        : { initial: { opacity: 0 }, animate: { opacity: 1 }, transition: { duration: 0.2, ease: EASE } })}
+      className="fixed inset-0 z-[100] flex items-center justify-center bg-[#05080f]/[0.93] backdrop-blur-sm"
+    >
+      <img
+        src={gallery[index]}
+        alt={`${title} screenshot ${index + 1} of ${gallery.length}`}
+        onClick={(e) => e.stopPropagation()}
+        className="max-w-[calc(100vw-1.5rem)] max-h-[calc(100svh-7rem)] sm:max-w-[calc(100vw-8rem)]
+                   object-contain rounded-lg shadow-[0_40px_120px_rgba(0,0,0,0.7)]"
+      />
+
+      <button
+        ref={closeRef}
+        type="button"
+        onClick={(e) => {
+          e.stopPropagation()
+          onClose()
+        }}
+        aria-label="Close full-size preview"
+        className={`absolute top-4 right-4 ${controlClass}`}
+      >
+        <X size={20} aria-hidden="true" />
+      </button>
+
+      {multiple && (
+        <>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              onNavigate((index - 1 + gallery.length) % gallery.length)
+            }}
+            aria-label="Previous screenshot"
+            className={`absolute left-2 sm:left-6 top-1/2 -translate-y-1/2 ${controlClass}`}
+          >
+            <ChevronLeft size={22} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              onNavigate((index + 1) % gallery.length)
+            }}
+            aria-label="Next screenshot"
+            className={`absolute right-2 sm:right-6 top-1/2 -translate-y-1/2 ${controlClass}`}
+          >
+            <ChevronRight size={22} aria-hidden="true" />
+          </button>
+          <p
+            aria-live="polite"
+            onClick={(e) => e.stopPropagation()}
+            className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3.5 py-1.5 rounded-full
+                       bg-white/[0.06] border border-white/10 backdrop-blur-md
+                       font-label text-xs tracking-wide text-on-surface-variant"
+          >
+            {index + 1} / {gallery.length}
+          </p>
+        </>
+      )}
+    </motion.div>
+  )
+}
+
 function ProjectCaseStudy({ project }: { project: Project }) {
   const reduced = useReducedMotion()
   const gallery = project.gallery ?? [project.imageUrl]
-  const [activeImage, setActiveImage] = useState(gallery[0])
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [lightboxOpen, setLightboxOpen] = useState(false)
+  const previewTriggerRef = useRef<HTMLButtonElement>(null)
+
+  const closeLightbox = useCallback(() => {
+    setLightboxOpen(false)
+    previewTriggerRef.current?.focus()
+  }, [])
 
   const details = [
     { icon: Target, label: 'Problem',      text: project.details.problem },
@@ -58,20 +216,30 @@ function ProjectCaseStudy({ project }: { project: Project }) {
 
   return (
     <main id="main-content" className="relative z-10 pt-20 sm:pt-24 pb-14 sm:pb-16">
-      <Container className="space-y-8 sm:space-y-12">
+      <Container className="space-y-7 sm:space-y-10">
         <motion.div {...fadeUp(0)}>
           <BackToProjects />
         </motion.div>
 
-        {/* Hero split — summary on the left, active screenshot on the right.
-            Thumbnails sit directly below, aligned with the screenshot column. */}
-        <section aria-labelledby="project-title" className="space-y-4 sm:space-y-5">
+        {/* Hero split — summary on the left, gallery card on the right.
+            The main screenshot and its thumbnails live inside one glass card
+            so they read as a single gallery component. */}
+        <section aria-labelledby="project-title">
           <div className="grid gap-8 lg:grid-cols-12 lg:gap-12 lg:items-center">
-            <motion.header {...fadeUp(0.05)} className="lg:col-span-5 space-y-4 sm:space-y-5">
-              <p className="font-label text-xs uppercase tracking-[0.15em] text-primary">Case Study</p>
+            {/* min-w-0 on both grid items: on mobile the grid track is auto-sized,
+                so without it the nested thumbnail scroller's intrinsic width
+                (all thumbnails side by side) blows the column past the viewport. */}
+            <motion.header {...fadeUp(0.05)} className="min-w-0 lg:col-span-5 space-y-4 sm:space-y-5">
+              <p className="flex items-center gap-3 font-label text-xs uppercase tracking-[0.15em] text-primary font-semibold">
+                <span
+                  className="h-px w-8 shrink-0 bg-gradient-to-r from-primary via-primary/60 to-transparent"
+                  aria-hidden="true"
+                />
+                Case Study
+              </p>
               <h1
                 id="project-title"
-                className="font-headline text-3xl sm:text-4xl xl:text-5xl font-bold tracking-tight text-on-surface"
+                className="font-headline text-3xl sm:text-4xl xl:text-5xl font-bold tracking-tight text-on-surface leading-[1.08]"
               >
                 {project.title}
               </h1>
@@ -106,70 +274,97 @@ function ProjectCaseStudy({ project }: { project: Project }) {
               )}
             </motion.header>
 
-            <motion.div {...fadeRight} className="lg:col-span-7">
-              <figure
-                className="relative w-full aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden gradient-border"
+            <motion.div {...fadeRight} className="min-w-0 lg:col-span-7">
+              <div
+                className="glass-panel gradient-border rounded-3xl p-2 sm:p-3"
                 style={{
-                  background: project.imageBg,
-                  boxShadow:  '0 30px 80px rgba(0, 0, 0, 0.45), 0 0 60px rgba(192, 193, 255, 0.06)',
+                  boxShadow: '0 30px 80px rgba(0, 0, 0, 0.45), 0 0 60px rgba(192, 193, 255, 0.06)',
                 }}
               >
-                <img
-                  src={activeImage}
-                  alt={`${project.title} screenshot`}
-                  className="absolute inset-0 w-full h-full object-contain"
-                />
-                <div
-                  className="absolute -bottom-12 -right-12 w-56 h-56 rounded-full pointer-events-none"
-                  style={{ background: 'radial-gradient(circle, rgba(192,193,255,0.1) 0%, transparent 70%)' }}
-                  aria-hidden="true"
-                />
-                <div
-                  className="absolute -top-8 -left-8 w-36 h-36 rounded-full pointer-events-none"
-                  style={{ background: 'radial-gradient(circle, rgba(75,77,216,0.16) 0%, transparent 70%)' }}
-                  aria-hidden="true"
-                />
-              </figure>
+                <figure className="relative m-0">
+                  <button
+                    ref={previewTriggerRef}
+                    type="button"
+                    onClick={() => setLightboxOpen(true)}
+                    className="group relative block w-full aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden
+                               cursor-zoom-in transition-shadow duration-200
+                               focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                    style={{ background: project.imageBg }}
+                  >
+                    <img
+                      src={gallery[activeIndex]}
+                      alt={`${project.title} screenshot`}
+                      className="absolute inset-0 w-full h-full object-contain"
+                    />
+                    <span className="sr-only">(open full-size preview)</span>
+                    <div
+                      className="absolute -bottom-12 -right-12 w-56 h-56 rounded-full pointer-events-none"
+                      style={{ background: 'radial-gradient(circle, rgba(192,193,255,0.1) 0%, transparent 70%)' }}
+                      aria-hidden="true"
+                    />
+                    <div
+                      className="absolute -top-8 -left-8 w-36 h-36 rounded-full pointer-events-none"
+                      style={{ background: 'radial-gradient(circle, rgba(75,77,216,0.16) 0%, transparent 70%)' }}
+                      aria-hidden="true"
+                    />
+                    <span
+                      aria-hidden="true"
+                      className="absolute bottom-2.5 right-2.5 sm:bottom-3 sm:right-3 inline-flex items-center gap-1.5
+                                 h-8 px-3 rounded-full bg-black/55 backdrop-blur-md border border-white/15
+                                 font-label text-xs text-white/90
+                                 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 group-focus-visible:opacity-100
+                                 transition-opacity duration-200"
+                    >
+                      <Maximize2 size={13} aria-hidden="true" />
+                      <span className="hidden sm:inline">View full image</span>
+                    </span>
+                  </button>
+                </figure>
+
+                {gallery.length > 1 && (
+                  <ul
+                    aria-label={`${project.title} screenshot thumbnails`}
+                    className="flex gap-2 sm:gap-2.5 mt-2 sm:mt-2.5 px-0.5 py-1 list-none
+                               overflow-x-auto scrollbar-hide snap-x"
+                  >
+                    {gallery.map((src, idx) => {
+                      const isActive = idx === activeIndex
+                      return (
+                        <li key={src} className="flex-shrink-0 snap-start">
+                          <button
+                            type="button"
+                            onClick={() => setActiveIndex(idx)}
+                            aria-label={`View screenshot ${idx + 1} of ${project.title}`}
+                            aria-current={isActive ? 'true' : undefined}
+                            className={`relative block w-24 sm:w-28 aspect-[16/9] rounded-lg overflow-hidden
+                                        transition-all duration-200
+                                        focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary
+                                        ${isActive ? 'opacity-100' : 'opacity-60 hover:opacity-100'}`}
+                            style={{
+                              background: project.imageBg,
+                              border: isActive
+                                ? '1px solid rgba(192,193,255,0.65)'
+                                : '1px solid rgba(255,255,255,0.1)',
+                              boxShadow: isActive
+                                ? '0 0 0 1px rgba(192,193,255,0.5), 0 0 18px rgba(192,193,255,0.2)'
+                                : 'none',
+                            }}
+                          >
+                            <img
+                              src={src}
+                              alt=""
+                              loading="lazy"
+                              className="absolute inset-0 w-full h-full object-contain"
+                            />
+                          </button>
+                        </li>
+                      )
+                    })}
+                  </ul>
+                )}
+              </div>
             </motion.div>
           </div>
-
-          {gallery.length > 1 && (
-            <motion.div {...fadeUp(0.2)} className="lg:grid lg:grid-cols-12 lg:gap-12">
-              <ul
-                aria-label={`${project.title} screenshot thumbnails`}
-                className="flex gap-3 overflow-x-auto pb-1 m-0 p-0 list-none lg:col-span-7 lg:col-start-6"
-              >
-                {gallery.map((src, idx) => {
-                  const isActive = src === activeImage
-                  return (
-                    <li key={src} className="flex-shrink-0">
-                      <button
-                        type="button"
-                        onClick={() => setActiveImage(src)}
-                        aria-label={`View screenshot ${idx + 1} of ${project.title}`}
-                        aria-current={isActive ? 'true' : undefined}
-                        className="relative block w-24 sm:w-32 aspect-[16/9] rounded-lg overflow-hidden transition-all duration-200
-                                   hover:opacity-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
-                        style={{
-                          background: project.imageBg,
-                          border:     isActive ? '2px solid rgba(192,193,255,0.7)' : '1px solid rgba(255,255,255,0.1)',
-                          opacity:    isActive ? 1 : 0.6,
-                          boxShadow:  isActive ? '0 0 20px rgba(192,193,255,0.18)' : 'none',
-                        }}
-                      >
-                        <img
-                          src={src}
-                          alt=""
-                          loading="lazy"
-                          className="absolute inset-0 w-full h-full object-contain"
-                        />
-                      </button>
-                    </li>
-                  )
-                })}
-              </ul>
-            </motion.div>
-          )}
         </section>
 
         {/* Case study breakdown */}
@@ -183,7 +378,7 @@ function ProjectCaseStudy({ project }: { project: Project }) {
             return (
               <div key={detail.label} className="glass-panel rounded-2xl p-4 sm:p-6 flex gap-3 sm:gap-4">
                 <div
-                  className="flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center"
+                  className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
                   style={{
                     background: 'linear-gradient(135deg, rgba(192,193,255,0.12) 0%, rgba(75,77,216,0.08) 100%)',
                     border:     '1px solid rgba(192,193,255,0.15)',
@@ -204,6 +399,17 @@ function ProjectCaseStudy({ project }: { project: Project }) {
           <BackToProjects />
         </div>
       </Container>
+
+      {lightboxOpen && (
+        <ImageLightbox
+          title={project.title}
+          gallery={gallery}
+          index={activeIndex}
+          onClose={closeLightbox}
+          onNavigate={setActiveIndex}
+          reduced={!!reduced}
+        />
+      )}
     </main>
   )
 }

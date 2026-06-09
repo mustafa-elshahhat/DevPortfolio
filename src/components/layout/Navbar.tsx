@@ -55,9 +55,11 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  // Close the menu when resizing up to desktop so it never stays stuck open
+  // Close the menu when resizing up to desktop so it never stays stuck open.
+  // Desktop nav starts at lg (1024px): below that, the logo + 5-link pill +
+  // "Hire Me" measurably overflow the row (e.g. 881px needed at 768px wide).
   useEffect(() => {
-    const onResize = () => { if (window.innerWidth >= 768) setIsMenuOpen(false) }
+    const onResize = () => { if (window.innerWidth >= 1024) setIsMenuOpen(false) }
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
@@ -141,7 +143,7 @@ export default function Navbar() {
 
         {/* ── Center glass pill ── */}
         <div
-          className="hidden md:flex items-center gap-1 px-3 py-2 rounded-[24px]"
+          className="hidden lg:flex items-center gap-1 px-3 py-2 rounded-[24px]"
           style={{
             background:           'rgba(255, 255, 255, 0.05)',
             backdropFilter:       'blur(16px)',
@@ -168,14 +170,14 @@ export default function Navbar() {
             href="#contact"
             onClick={(e) => { e.preventDefault(); handleNavClick('#contact') }}
             ariaLabel="Hire Me"
-            className="hidden md:inline-flex"
+            className="hidden lg:inline-flex"
           >
             Hire Me
           </Button>
 
           <button
             onClick={() => setIsMenuOpen((p) => !p)}
-            className="md:hidden p-2 rounded-xl text-on-surface-variant hover:text-primary hover:bg-white/5 transition-colors"
+            className="lg:hidden p-2 rounded-xl text-on-surface-variant hover:text-primary hover:bg-white/5 transition-colors"
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
@@ -198,7 +200,7 @@ export default function Navbar() {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
               onClick={() => setIsMenuOpen(false)}
-              className="fixed inset-0 z-20 md:hidden bg-black/40 backdrop-blur-sm"
+              className="fixed inset-0 z-20 lg:hidden bg-black/40 backdrop-blur-sm"
               aria-hidden="true"
             />
 
@@ -212,7 +214,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -8 }}
               transition={{ duration: 0.2, ease: 'easeOut' }}
-              className="fixed left-0 right-0 z-30 md:hidden mx-4 rounded-2xl overflow-hidden"
+              className="fixed left-0 right-0 z-30 lg:hidden mx-4 rounded-2xl overflow-hidden"
               style={{
               top:                  navHeight + MENU_GAP,
               background:           'rgba(10, 16, 40, 0.97)',

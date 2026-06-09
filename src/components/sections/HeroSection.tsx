@@ -63,7 +63,7 @@ export default function HeroSection() {
         className="relative z-10 max-w-6xl mx-auto px-4 sm:px-8 w-full
                    flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-16"
       >
-        <div className="flex-1 space-y-4 sm:space-y-5 md:space-y-6">
+        <div className="flex-1 min-w-0 space-y-4 sm:space-y-5 md:space-y-6">
           <motion.p
             {...ip}
             className="flex items-center gap-3 font-label text-sm sm:text-base md:text-lg

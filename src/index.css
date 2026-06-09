@@ -290,6 +290,16 @@ section[id] {
     border-color: rgba(192, 193, 255, 0.5);
   }
 
+  /* Hide a scroll container's native scrollbar while keeping scroll/swipe
+     behavior (used by the project gallery thumbnail strip). */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
   .gradient-border {
     position: relative;
     border-radius: 1.5rem;
