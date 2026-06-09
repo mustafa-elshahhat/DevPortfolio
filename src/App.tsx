@@ -1,12 +1,13 @@
 import Navbar from './components/layout/Navbar'
-import HeroSection from './components/sections/HeroSection'
-import AboutSection from './components/sections/AboutSection'
-import SkillsSection from './components/sections/SkillsSection'
-import ProjectsSection from './components/sections/ProjectsSection'
-import ContactSection from './components/sections/ContactSection'
 import Footer from './components/layout/Footer'
+import HomePage from './components/pages/HomePage'
+import ProjectDetailsPage from './components/pages/ProjectDetailsPage'
+import { usePathname } from './lib/router'
 
 export default function App() {
+  const pathname = usePathname()
+  const projectMatch = pathname.match(/^\/projects\/([^/]+)\/?$/)
+
   return (
     <>
       <a
@@ -25,13 +26,11 @@ export default function App() {
 
       <Navbar />
 
-      <main id="main-content" className="relative z-10">
-        <HeroSection    />
-        <AboutSection   />
-        <SkillsSection  />
-        <ProjectsSection />
-        <ContactSection />
-      </main>
+      {projectMatch ? (
+        <ProjectDetailsPage projectId={decodeURIComponent(projectMatch[1])} />
+      ) : (
+        <HomePage />
+      )}
 
       <Footer />
     </>

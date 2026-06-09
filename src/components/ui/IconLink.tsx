@@ -1,9 +1,9 @@
-import type { LucideIcon } from 'lucide-react'
 import { cn } from '../../lib/utils'
+import type { IconComponent } from '../icons/types'
 
 interface IconLinkProps {
   href:       string
-  icon:       LucideIcon
+  icon:       IconComponent
   label:      string
   external?:  boolean
   className?: string

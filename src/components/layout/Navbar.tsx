@@ -11,6 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useScrollSpy } from '../../hooks/useScrollSpy'
 import Button from '../ui/Button'
 import { cn } from '../../lib/utils'
+import { usePathname, navigate, scrollToHash } from '../../lib/router'
 
 const NAV_LINKS = [
   { label: 'Home',     href: '#hero',     icon: Home       },
@@ -26,6 +27,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled]     = useState(false)
   const activeId                    = useScrollSpy(SECTION_IDS)
+  const pathname                    = usePathname()
 
   // The mobile menu docks directly beneath the navbar. Instead of hard-coding a
   // height (brittle once the webfont loads or the scrolled border toggles), we
@@ -73,17 +75,23 @@ export default function Navbar() {
     }
   }, [isMenuOpen])
 
-  // If a project modal opens, close the mobile menu so the two layers never coexist.
+  // Nav-link clicks already close the menu via handleNavClick; this also
+  // closes it on browser back/forward so it can't stay stuck open across pages.
   useEffect(() => {
     const close = () => setIsMenuOpen(false)
-    window.addEventListener('project-modal-open', close)
-    return () => window.removeEventListener('project-modal-open', close)
+    window.addEventListener('popstate', close)
+    return () => window.removeEventListener('popstate', close)
   }, [])
 
   const handleNavClick = (href: string) => {
     setIsMenuOpen(false)
-    const el = document.querySelector(href)
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    if (pathname !== '/') {
+      // On a sub-route (e.g. a project page) the homepage sections don't exist
+      // yet — navigate home and let it scroll to the section on mount.
+      navigate('/' + href)
+    } else {
+      scrollToHash(href)
+    }
   }
 
   return (
@@ -92,7 +100,7 @@ export default function Navbar() {
           The full-width row has a dark background so NO content
           bleeds through it while scrolling.
 
-          Z-INDEX LAYER SYSTEM (keep in sync with ProjectsSection):
+          Z-INDEX LAYER SYSTEM:
             z-0          background orbs
             z-10         main page content (normal flow)
             z-20         mobile menu backdrop
@@ -100,7 +108,6 @@ export default function Navbar() {
                          the measured navHeight; above backdrop, below navbar so
                          the navbar's close button stays clickable)
             z-40         navbar (this element)
-            z-[100]      project modal (portaled to body, above all nav)
             z-[200]      skip link (always reachable for keyboard users)
        ─────────────────────────────────────────────────────── */}
       <nav
