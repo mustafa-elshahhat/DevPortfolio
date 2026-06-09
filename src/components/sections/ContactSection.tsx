@@ -252,26 +252,13 @@ export default function ContactSection() {
           </motion.div>
 
           <motion.div variants={fadeInUp} className="flex flex-wrap items-center gap-3 mb-6">
-            <a
-              href="mailto:mustafaelshahhat@gmail.com"
-              className="inline-flex items-center gap-2.5 h-10 px-4 rounded-full
-                         border border-outline-variant/20 bg-white/[0.04]
-                         text-on-surface-variant hover:text-primary hover:border-outline-variant/50 hover:bg-surface-container-high hover:-translate-y-0.5
-                         transition-all duration-200
-                         focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
-            >
-              <Mail size={16} className="text-primary shrink-0" aria-hidden="true" />
-              <span className="font-label text-sm">mustafaelshahhat@gmail.com</span>
-            </a>
-            {socialLinks.filter(l => l.label === 'GitHub' || l.label === 'LinkedIn').map((link) => (
+            {socialLinks.map((link) => (
               <IconLink
                 key={link.label}
                 href={link.href}
                 icon={link.icon}
                 label={link.label}
-                size={16}
-                showLabel
-                external
+                external={!link.href.startsWith('mailto')}
               />
             ))}
           </motion.div>

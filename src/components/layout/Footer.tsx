@@ -23,8 +23,6 @@ export default function Footer() {
               href={link.href}
               icon={link.icon}
               label={link.label}
-              size={18}
-              showLabel
               external={!link.href.startsWith('mailto') && !link.href.startsWith('tel')}
             />
           ))}
