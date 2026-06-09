@@ -26,10 +26,10 @@ export default function IconLink({
       className={cn(
         'inline-flex items-center justify-center',
         'w-10 h-10 rounded-full',
-        'border border-outline-variant/20 bg-white/[0.04]',
+        'border border-outline-variant/30 bg-white/[0.06]',
         'text-on-surface-variant',
         'transition-all duration-200',
-        'hover:border-outline-variant/50 hover:text-primary hover:bg-surface-container-high hover:-translate-y-0.5',
+        'hover:border-primary/50 hover:text-primary hover:bg-surface-container-high hover:-translate-y-0.5',
         'active:translate-y-0 active:scale-95',
         'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface',
         className,
