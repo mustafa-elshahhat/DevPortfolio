@@ -6,7 +6,7 @@ import { socialLinks } from '../../data/social'
 import Button from '../ui/Button'
 import IconLink from '../ui/IconLink'
 
-const KEYWORDS = ['ASP.NET Core', 'C#', 'Angular', 'SQL Server', 'REST APIs']
+const KEYWORDS = ['ASP.NET Core', 'React', 'Angular', 'TypeScript', 'SQL Server', 'REST APIs']
 
 function useTypewriter(words: string[], typingSpeed = 80, deletingSpeed = 50, pauseDuration = 2000, enabled = true) {
   const [displayText, setDisplayText] = useState(enabled ? '' : words[0])
@@ -84,7 +84,7 @@ export default function HeroSection() {
           >
             Computer Science{' '}
             <span className="block">Student</span>
-            <span className="gradient-text text-glow">Full-Stack .NET</span>
+            <span className="gradient-text text-glow">& Full-Stack Developer</span>
           </motion.h1>
 
           <motion.p
@@ -92,12 +92,14 @@ export default function HeroSection() {
             className="text-base sm:text-lg md:text-xl text-on-surface-variant/80
                        font-light leading-relaxed max-w-xl"
           >
-            Computer Science student on a full-stack .NET track. I build web and desktop
-            applications with <span className="keyword-highlight">ASP.NET Core</span>,{' '}
-            <span className="keyword-highlight">C#</span>,
-            <span className="keyword-highlight"> Angular</span> and{' '}
-            <span className="keyword-highlight">SQL Server</span> — REST APIs,
-            authentication, databases, dashboards and responsive UI.
+            I build practical web applications using{' '}
+            <span className="keyword-highlight">ASP.NET Core</span>,{' '}
+            <span className="keyword-highlight">React</span>,{' '}
+            <span className="keyword-highlight">Angular</span>,{' '}
+            <span className="keyword-highlight">TypeScript</span>, and{' '}
+            <span className="keyword-highlight">SQL Server</span> — with a focus on
+            clean UI, secure APIs, databases, dashboards, i18n, deployment,
+            and production-ready workflows.
           </motion.p>
 
           <motion.div {...ip} className="flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -120,7 +122,7 @@ export default function HeroSection() {
                 ?.scrollIntoView({ behavior: 'smooth', block: 'start' })
               }
             >
-              Let&apos;s Work Together <ArrowRight size={18} aria-hidden="true" />
+              Contact Me <ArrowRight size={18} aria-hidden="true" />
             </Button>
             <Button
               variant="secondary"

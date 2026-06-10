@@ -33,17 +33,17 @@ export default function ProjectsSection() {
           className="space-y-2 mb-8 sm:mb-10"
         >
           <motion.p variants={reduced ? undefined : fadeInUp} className="font-label text-xs uppercase tracking-[0.15em] text-primary">
-            03 / Work
+            03 / Projects
           </motion.p>
           <motion.h2
             id="projects-heading"
             variants={reduced ? undefined : slideUpReveal}
             className="font-headline text-4xl md:text-5xl font-bold tracking-tight"
           >
-            Featured Work
+            Projects
           </motion.h2>
           <motion.p variants={reduced ? undefined : fadeInUp} className="text-on-surface-variant/75 text-lg max-w-2xl">
-            Full-stack and desktop applications spanning ASP.NET Core APIs, SQL Server databases, and Angular, React, and Flutter front-ends.
+            Practical full-stack and desktop applications I&apos;ve built as academic and personal projects — spanning ASP.NET Core APIs, SQL Server databases, and Angular, React, and Flutter front-ends.
           </motion.p>
         </motion.div>
 

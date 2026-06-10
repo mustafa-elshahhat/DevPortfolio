@@ -243,11 +243,11 @@ export default function ContactSection() {
               04 / Contact
             </p>
             <h2 id="contact-heading" className="font-headline text-4xl md:text-5xl font-bold tracking-tight">
-              Let&apos;s Work Together
+              Get In Touch
             </h2>
             <p className="text-on-surface-variant">
-              Have a project in mind, an internship, or a full-stack .NET opportunity?
-              I&apos;d love to hear from you. Let&apos;s build something together.
+              Looking for an internship, a junior developer opportunity, or want to discuss
+              a project? I&apos;d love to hear from you.
             </p>
           </motion.div>
 
@@ -395,7 +395,7 @@ export default function ContactSection() {
                     </>
                   ) : (
                     <>
-                      Let&apos;s Connect
+                      Send Message
                       <Send size={18} aria-hidden="true" />
                     </>
                   )}

@@ -57,7 +57,7 @@ export default function Navbar() {
 
   // Close the menu when resizing up to desktop so it never stays stuck open.
   // Desktop nav starts at lg (1024px): below that, the logo + 5-link pill +
-  // "Hire Me" measurably overflow the row (e.g. 881px needed at 768px wide).
+  // "Contact Me" measurably overflow the row (e.g. 881px needed at 768px wide).
   useEffect(() => {
     const onResize = () => { if (window.innerWidth >= 1024) setIsMenuOpen(false) }
     window.addEventListener('resize', onResize)
@@ -169,10 +169,10 @@ export default function Navbar() {
             size="sm"
             href="#contact"
             onClick={(e) => { e.preventDefault(); handleNavClick('#contact') }}
-            ariaLabel="Hire Me"
+            ariaLabel="Contact Me"
             className="hidden lg:inline-flex"
           >
-            Hire Me
+            Contact Me
           </Button>
 
           <button
@@ -247,7 +247,7 @@ export default function Navbar() {
               })}
               <div className="pt-2 pb-1">
                 <Button variant="primary" size="md" href="#contact" onClick={(e) => { e.preventDefault(); handleNavClick('#contact') }} className="w-full">
-                  Hire Me
+                  Contact Me
                 </Button>
               </div>
             </div>
