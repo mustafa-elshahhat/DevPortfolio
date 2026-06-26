@@ -100,7 +100,7 @@ export default function ProjectsSection() {
                     {project.title}
                   </h3>
                   <p className="text-on-surface-variant/70 text-xs sm:text-sm leading-relaxed line-clamp-2 sm:line-clamp-3">
-                    {project.description}
+                    {project.shortDescription ?? project.description}
                   </p>
                 </div>
 

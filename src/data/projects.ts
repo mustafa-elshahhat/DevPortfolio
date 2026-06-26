@@ -2,6 +2,9 @@ export interface Project {
   id:          string
   title:       string
   description: string
+  shortDescription?: string
+  category?:    string
+  discipline?:  string
   stack:       string[]
   liveUrl?:    string
   githubUrl?:  string
@@ -10,6 +13,7 @@ export interface Project {
   imageAlt?:   string
   gallery?:    string[]
   galleryAlts?: string[]
+  galleryCaptions?: string[]
   details: {
     problem:       string
     solution:      string
@@ -73,12 +77,12 @@ export const projects: Project[] = [
     liveUrl:     'https://dermiva-eg.vercel.app/en',
     githubUrl:   'https://github.com/mustafa-elshahhat/dermiva',
     imageBg:     'linear-gradient(135deg, #331a24 0%, #7a3a53 48%, #d08a98 100%)',
-    imageUrl:    '/images/projects/dermiva-homepage.png',
+    imageUrl:    '/images/projects/dermiva-homepage.webp',
     imageAlt:    'Dermiva skincare e-commerce homepage',
     gallery: [
-      '/images/projects/dermiva-homepage.png',
-      '/images/projects/dermiva-products-page.png',
-      '/images/projects/dermiva-product-details.png',
+      '/images/projects/dermiva-homepage.webp',
+      '/images/projects/dermiva-products-page.webp',
+      '/images/projects/dermiva-product-details.webp',
     ],
     galleryAlts: [
       'Dermiva skincare e-commerce homepage',
@@ -90,6 +94,38 @@ export const projects: Project[] = [
       solution:     'Built a responsive storefront with localized routes, RTL/LTR support, persistent cart and wishlist state, checkout screens, account mock flows, and accessible navigation and form states.',
       architecture: 'Next.js App Router with locale segments, React 19 and TypeScript; next-intl message files power UI strings, while async service layers currently read mock data and can be swapped for API adapters later.',
       performance:  'Uses route metadata, sitemap and robots output, JSON-LD structured data, local fonts, responsive utilities, and vendor-neutral analytics readiness with no third-party tracking enabled by default.',
+    },
+  },
+  {
+    id:               'saad-logistics-website',
+    title:            'Saad Logistics Website',
+    shortDescription: 'A bilingual logistics company website with SEO landing pages, contact workflows, WhatsApp access, and a live serverless news feed.',
+    description:      'Saad Logistics Website is a bilingual Arabic/English corporate website for a Saudi logistics and customs-clearance company. Built with React, TypeScript, Vite, and Tailwind CSS, it includes responsive company pages, RTL/LTR localization, SEO-focused service landing pages, EmailJS contact workflows, WhatsApp and Google Maps integrations, plus a serverless logistics news feed powered by Google News RSS.',
+    category:         'Bilingual Business Website',
+    discipline:       'Frontend Engineering + SEO Architecture',
+    stack:            ['React', 'TypeScript', 'Vite', 'Tailwind CSS', 'i18next', 'Serverless Functions', 'React Router', 'EmailJS'],
+    liveUrl:          'https://www.saadlogistic.com/',
+    githubUrl:        'https://github.com/Yousef-elbazz/SAAD-LOGITSTICS-COMPANY',
+    imageBg:          'linear-gradient(135deg, #082f49 0%, #0f766e 50%, #22c55e 100%)',
+    imageUrl:         '/images/projects/saad-logistics/saad-logistics-homepage.webp',
+    imageAlt:         'Saad Logistics Arabic homepage presenting international freight and logistics services',
+    gallery: [
+      '/images/projects/saad-logistics/saad-logistics-homepage.webp',
+      '/images/projects/saad-logistics/saad-logistics-services.webp',
+    ],
+    galleryAlts: [
+      'Saad Logistics Arabic homepage presenting international freight and logistics services',
+      'Saad Logistics services page displaying freight, warehousing, customs clearance, and tracking services',
+    ],
+    galleryCaptions: [
+      'Arabic-first responsive homepage with global freight visuals, service calls to action, and RTL navigation.',
+      'Responsive services overview covering sea freight, air freight, land transport, warehousing, customs clearance, and tracking-related content.',
+    ],
+    details: {
+      problem:      'A logistics company needed a public-facing website that could communicate its services across Arabic and English audiences, support Saudi-market search visibility, and convert visitors into qualified leads. The site also required practical contact paths through WhatsApp, email, phone, and location discovery without requiring a full logistics management backend.',
+      solution:     'The solution is a responsive bilingual website with localized company pages, reusable SEO service landing pages, contact and quote workflows, WhatsApp shortcuts, Google Maps, and a logistics news section. A serverless endpoint aggregates Google News RSS content, while EmailJS handles contact submissions when the required environment variables are configured.',
+      architecture: 'The project is a feature-oriented Vite React SPA built with TypeScript, React Router, Tailwind CSS, i18next, shared UI components, localized resources, and centralized SEO utilities. Primary and SEO routes are lazy-loaded, while Vercel and Netlify serverless functions expose the news endpoint and EmailJS provides environment-based lead delivery.',
+      performance:  'The implementation uses route-level code splitting, route prefetching, responsive WebP assets, lazy loading, preload hints, CSS code splitting, and manual Vite vendor chunks. No verified numeric Lighthouse benchmark is available, so the case study presents the implemented optimization techniques without claiming an unsupported performance score.',
     },
   },
   {

@@ -241,6 +241,7 @@ function ProjectCaseStudy({ project }: { project: Project }) {
   const gallery = project.gallery ?? [project.imageUrl]
   const galleryAlts = gallery.map((_, index) => project.galleryAlts?.[index] ?? project.imageAlt ?? `${project.title} screenshot`)
   const [activeIndex, setActiveIndex] = useState(0)
+  const activeCaption = project.galleryCaptions?.[activeIndex]
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const previewTriggerRef = useRef<HTMLButtonElement>(null)
 
@@ -294,7 +295,7 @@ function ProjectCaseStudy({ project }: { project: Project }) {
                   className="h-px w-8 shrink-0 bg-gradient-to-r from-primary via-primary/60 to-transparent"
                   aria-hidden="true"
                 />
-                Case Study
+                {project.discipline ?? 'Case Study'}
               </p>
               <h1
                 id="project-title"
@@ -344,6 +345,7 @@ function ProjectCaseStudy({ project }: { project: Project }) {
                   <button
                     ref={previewTriggerRef}
                     type="button"
+                    aria-describedby={activeCaption ? `${project.id}-screenshot-caption` : undefined}
                     onClick={() => setLightboxOpen(true)}
                     className="group relative block w-full aspect-[16/9] rounded-xl sm:rounded-2xl overflow-hidden
                                cursor-zoom-in transition-shadow duration-200
@@ -378,6 +380,11 @@ function ProjectCaseStudy({ project }: { project: Project }) {
                       <span className="hidden sm:inline">View full image</span>
                     </span>
                   </button>
+                  {activeCaption && (
+                    <figcaption id={`${project.id}-screenshot-caption`} className="sr-only">
+                      {activeCaption}
+                    </figcaption>
+                  )}
                 </figure>
 
                 {gallery.length > 1 && (
