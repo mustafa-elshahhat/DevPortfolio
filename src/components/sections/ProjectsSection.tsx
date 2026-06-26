@@ -74,7 +74,7 @@ export default function ProjectsSection() {
               >
                 <img
                   src={project.imageUrl}
-                  alt={`${project.title} screenshot`}
+                  alt={project.imageAlt ?? `${project.title} screenshot`}
                   loading="lazy"
                   className="absolute inset-0 w-full h-full object-contain"
                 />
@@ -147,7 +147,7 @@ export default function ProjectsSection() {
                       aria-label={`GitHub repo for ${project.title}`}
                       className="flex items-center gap-1.5 whitespace-nowrap text-on-surface-variant/60 hover:text-on-surface font-headline font-semibold text-xs sm:text-sm transition-colors duration-200"
                     >
-                      Code
+                      GitHub
                       <GithubIcon size={13} aria-hidden="true" />
                     </a>
                   )}

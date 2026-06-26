@@ -45,6 +45,7 @@ function BackToProjects() {
 function ImageLightbox({
   title,
   gallery,
+  galleryAlts,
   index,
   onClose,
   onNavigate,
@@ -52,6 +53,7 @@ function ImageLightbox({
 }: {
   title: string
   gallery: string[]
+  galleryAlts: string[]
   index: number
   onClose: () => void
   onNavigate: (nextIndex: number) => void
@@ -170,7 +172,7 @@ function ImageLightbox({
     >
       <img
         src={gallery[index]}
-        alt={`${title} screenshot ${index + 1} of ${gallery.length}`}
+        alt={galleryAlts[index] ?? `${title} screenshot ${index + 1} of ${gallery.length}`}
         onClick={(e) => e.stopPropagation()}
         draggable={false}
         className="max-w-[calc(100vw-1.5rem)] max-h-[calc(100svh-7rem)] sm:max-w-[calc(100vw-8rem)]
@@ -237,6 +239,7 @@ function ImageLightbox({
 function ProjectCaseStudy({ project }: { project: Project }) {
   const reduced = useReducedMotion()
   const gallery = project.gallery ?? [project.imageUrl]
+  const galleryAlts = gallery.map((_, index) => project.galleryAlts?.[index] ?? project.imageAlt ?? `${project.title} screenshot`)
   const [activeIndex, setActiveIndex] = useState(0)
   const [lightboxOpen, setLightboxOpen] = useState(false)
   const previewTriggerRef = useRef<HTMLButtonElement>(null)
@@ -323,7 +326,7 @@ function ProjectCaseStudy({ project }: { project: Project }) {
                   )}
                   {project.githubUrl && (
                     <Button variant="secondary" size="sm" href={project.githubUrl} external>
-                      Code <GithubIcon size={16} aria-hidden="true" />
+                      GitHub <GithubIcon size={16} aria-hidden="true" />
                     </Button>
                   )}
                 </div>
@@ -349,7 +352,7 @@ function ProjectCaseStudy({ project }: { project: Project }) {
                   >
                     <img
                       src={gallery[activeIndex]}
-                      alt={`${project.title} screenshot`}
+                      alt={galleryAlts[activeIndex] ?? `${project.title} screenshot`}
                       className="absolute inset-0 w-full h-full object-contain"
                     />
                     <span className="sr-only">(open full-size preview)</span>
@@ -460,6 +463,7 @@ function ProjectCaseStudy({ project }: { project: Project }) {
         <ImageLightbox
           title={project.title}
           gallery={gallery}
+          galleryAlts={galleryAlts}
           index={activeIndex}
           onClose={closeLightbox}
           onNavigate={setActiveIndex}

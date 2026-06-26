@@ -7,7 +7,9 @@ export interface Project {
   githubUrl?:  string
   imageBg:     string
   imageUrl:    string
+  imageAlt?:   string
   gallery?:    string[]
+  galleryAlts?: string[]
   details: {
     problem:       string
     solution:      string
@@ -61,6 +63,33 @@ export const projects: Project[] = [
       solution:     'Implemented a custom gift-box builder with category-based pricing, an admin dashboard for catalog and order management, and automated WhatsApp updates on order and payment status.',
       architecture: 'Angular 21 + TypeScript front-end calling an ASP.NET Core (.NET 8) backend with Entity Framework Core over SQL Server; JWT auth with CSRF protection, and a dedicated Node.js WhatsApp microservice for notifications.',
       performance:  'Uses background services for the notification queue and order expiry, output caching with tag-based invalidation, and health checks for the database and media storage.',
+    },
+  },
+  {
+    id:          'dermiva',
+    title:       'Dermiva',
+    description: 'Bilingual skincare e-commerce storefront built with Next.js App Router, React and TypeScript. Includes English/Arabic locale routing, RTL/LTR layout support, cart and wishlist persistence, checkout UI flows, SEO metadata, structured data, and API-ready services backed by mock data for frontend-only deployment.',
+    stack:       ['Next.js', 'React', 'TypeScript', 'next-intl', 'CSS'],
+    liveUrl:     'https://dermiva-eg.vercel.app/en',
+    githubUrl:   'https://github.com/mustafa-elshahhat/dermiva',
+    imageBg:     'linear-gradient(135deg, #331a24 0%, #7a3a53 48%, #d08a98 100%)',
+    imageUrl:    '/images/projects/dermiva-homepage.png',
+    imageAlt:    'Dermiva skincare e-commerce homepage',
+    gallery: [
+      '/images/projects/dermiva-homepage.png',
+      '/images/projects/dermiva-products-page.png',
+      '/images/projects/dermiva-product-details.png',
+    ],
+    galleryAlts: [
+      'Dermiva skincare e-commerce homepage',
+      'Dermiva all products shopping page',
+      'Dermiva product details page',
+    ],
+    details: {
+      problem:      'A skincare storefront needed bilingual English and Arabic shopping flows, locale-aware layout direction, and a frontend foundation ready for a future backend/API integration.',
+      solution:     'Built a responsive storefront with localized routes, RTL/LTR support, persistent cart and wishlist state, checkout screens, account mock flows, and accessible navigation and form states.',
+      architecture: 'Next.js App Router with locale segments, React 19 and TypeScript; next-intl message files power UI strings, while async service layers currently read mock data and can be swapped for API adapters later.',
+      performance:  'Uses route metadata, sitemap and robots output, JSON-LD structured data, local fonts, responsive utilities, and vendor-neutral analytics readiness with no third-party tracking enabled by default.',
     },
   },
   {
@@ -147,6 +176,7 @@ export const projects: Project[] = [
     title:       'BookNest E-Library',
     description: 'Static digital-library web app built with vanilla HTML, CSS and JavaScript (no frameworks). Browse and search a catalog by title, author or category with client-side filtering, dynamic book-detail rendering with SVG cover fallbacks, query-parameter routing, and a mobile-first responsive CSS Grid layout.',
     stack:       ['HTML', 'CSS', 'JavaScript'],
+    liveUrl:     'https://e-library-flame-omega.vercel.app/',
     githubUrl:   'https://github.com/mustafa-elshahhat/E-Library-WebApp',
     imageBg:     'linear-gradient(135deg, #1a0533 0%, #2d1060 50%, #0f2060 100%)',
     imageUrl:    '/images/projects/booknest-cover.webp',

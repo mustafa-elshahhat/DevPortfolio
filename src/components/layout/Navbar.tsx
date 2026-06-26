@@ -11,7 +11,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useScrollSpy } from '../../hooks/useScrollSpy'
 import Button from '../ui/Button'
 import { cn } from '../../lib/utils'
-import { usePathname, navigate, scrollToHash } from '../../lib/router'
+import { NAVIGATE_EVENT, usePathname, useHash, navigate, scrollToHash } from '../../lib/router'
 
 const NAV_LINKS = [
   { label: 'Home',     href: '#hero',     icon: Home       },
@@ -21,13 +21,25 @@ const NAV_LINKS = [
   { label: 'Contact',  href: '#contact',  icon: Mail       },
 ]
 
-const SECTION_IDS = ['hero', 'about', 'skills', 'projects', 'contact']
+const SECTION_IDS = ['hero', 'about', 'skills', 'projects', 'contact'] as const
+const SECTION_ID_SET = new Set<string>(SECTION_IDS)
+
+function sectionFromHash(hash: string) {
+  const id = hash.startsWith('#') ? hash.slice(1) : ''
+  return SECTION_ID_SET.has(id) ? id : ''
+}
 
 export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [scrolled, setScrolled]     = useState(false)
-  const activeId                    = useScrollSpy(SECTION_IDS)
   const pathname                    = usePathname()
+  const hash                        = useHash()
+  const activeSection               = useScrollSpy(SECTION_IDS, pathname === '/')
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null)
+  const activeItem                  = pathname.startsWith('/projects')
+    ? 'projects'
+    : sectionFromHash(hash) || activeSection || 'hero'
+  const hashTargetRef              = useRef(sectionFromHash(hash))
 
   // The mobile menu docks directly beneath the navbar. Instead of hard-coding a
   // height (brittle once the webfont loads or the scrolled border toggles), we
@@ -85,14 +97,48 @@ export default function Navbar() {
     return () => window.removeEventListener('popstate', close)
   }, [])
 
+  useEffect(() => {
+    hashTargetRef.current = sectionFromHash(hash)
+  }, [hash])
+
+  useEffect(() => {
+    if (pathname === '/' && activeSection) {
+      const hashTarget = hashTargetRef.current
+      if (hashTarget && activeSection !== hashTarget) return
+      if (hashTarget === activeSection) hashTargetRef.current = ''
+
+      const nextHash = `#${activeSection}`
+      if (window.location.hash !== nextHash) {
+        window.history.replaceState(null, '', `/${nextHash}`)
+        window.dispatchEvent(new Event(NAVIGATE_EVENT))
+      }
+    }
+  }, [pathname, activeSection])
+
   const handleNavClick = (href: string) => {
     setIsMenuOpen(false)
-    if (pathname !== '/') {
-      // On a sub-route (e.g. a project page) the homepage sections don't exist
-      // yet — navigate home and let it scroll to the section on mount.
-      navigate('/' + href)
-    } else {
+    navigate('/' + href)
+
+    if (pathname === '/') {
       scrollToHash(href)
+    }
+  }
+
+  const handleLogoClick = () => {
+    setIsMenuOpen(false)
+    navigate('/#hero')
+
+    if (pathname === '/') {
+      scrollToHash('#hero')
+    }
+  }
+
+  const handleContactClick = () => {
+    setIsMenuOpen(false)
+    navigate('/#contact')
+
+    if (pathname === '/') {
+      scrollToHash('#contact')
     }
   }
 
@@ -135,7 +181,7 @@ export default function Navbar() {
         {/* ── Logo ── */}
         <a
           href="#hero"
-          onClick={(e) => { e.preventDefault(); handleNavClick('#hero') }}
+          onClick={(e) => { e.preventDefault(); handleLogoClick() }}
           className="font-headline font-bold text-lg tracking-tight text-primary hover:opacity-80 transition-opacity shrink-0"
         >
           Mustafa Elshahhat
@@ -156,7 +202,9 @@ export default function Navbar() {
             <NavPillItem
               key={link.href}
               link={link}
-              isActive={activeId === link.href.slice(1)}
+              isActive={activeItem === link.href.slice(1)}
+              isHovered={hoveredItem === link.href.slice(1)}
+              onHoverChange={setHoveredItem}
               onClick={handleNavClick}
             />
           ))}
@@ -168,7 +216,7 @@ export default function Navbar() {
             variant="primary"
             size="sm"
             href="#contact"
-            onClick={(e) => { e.preventDefault(); handleNavClick('#contact') }}
+            onClick={(e) => { e.preventDefault(); handleContactClick() }}
             ariaLabel="Contact Me"
             className="hidden lg:inline-flex"
           >
@@ -226,7 +274,7 @@ export default function Navbar() {
           >
             <div className="px-4 py-4 flex flex-col gap-1">
               {NAV_LINKS.map((link) => {
-                const isActive = activeId === link.href.slice(1)
+                const isActive = activeItem === link.href.slice(1)
                 return (
                   <a
                     key={link.href}
@@ -246,7 +294,7 @@ export default function Navbar() {
                 )
               })}
               <div className="pt-2 pb-1">
-                <Button variant="primary" size="md" href="#contact" onClick={(e) => { e.preventDefault(); handleNavClick('#contact') }} className="w-full">
+                <Button variant="primary" size="md" href="#contact" onClick={(e) => { e.preventDefault(); handleContactClick() }} className="w-full">
                   Contact Me
                 </Button>
               </div>
@@ -261,15 +309,23 @@ export default function Navbar() {
 
 /* ── NavPillItem ── slide-up icon animation ─────────────── */
 interface NavPillItemProps {
-  link:     { label: string; href: string; icon: React.ElementType }
-  isActive: boolean
-  onClick:  (href: string) => void
+  link:          { label: string; href: string; icon: React.ElementType }
+  isActive:      boolean
+  isHovered:     boolean
+  onHoverChange: (item: string | null) => void
+  onClick:       (href: string) => void
 }
 
-function NavPillItem({ link, isActive, onClick }: NavPillItemProps) {
+function NavPillItem({ link, isActive, isHovered, onHoverChange, onClick }: NavPillItemProps) {
   const Icon = link.icon
+  const itemId = link.href.slice(1)
+
   return (
-    <div className="relative">
+    <div
+      className="relative"
+      onMouseEnter={() => onHoverChange(itemId)}
+      onMouseLeave={() => onHoverChange(null)}
+    >
       <a
         href={link.href}
         onClick={(e) => { e.preventDefault(); onClick(link.href) }}
@@ -312,7 +368,11 @@ function NavPillItem({ link, isActive, onClick }: NavPillItemProps) {
 
         {/* Hover bg */}
         <div
-          className="absolute inset-0 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+          className={cn(
+            'absolute inset-0 rounded-2xl transition-opacity duration-300 pointer-events-none',
+            isHovered ? 'opacity-100' : 'opacity-0',
+          )}
+          aria-hidden="true"
           style={{ background: 'rgba(255,255,255,0.04)' }}
         />
       </a>

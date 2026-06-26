@@ -1,33 +1,68 @@
 import { useEffect, useState } from 'react'
+import { NAVIGATE_EVENT } from '../lib/router'
 
-export function useScrollSpy(sectionIds: string[]): string {
+export function useScrollSpy(sectionIds: readonly string[], enabled = true): string {
   const [activeId, setActiveId] = useState<string>('')
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        // Find the topmost visible section
-        const visible = entries
-          .filter((e) => e.isIntersecting)
-          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
+    if (!enabled) {
+      return
+    }
 
-        if (visible.length > 0) {
-          setActiveId(visible[0].target.id)
+    let frame = 0
+
+    const getSections = () => sectionIds
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => Boolean(el))
+
+    const updateActiveSection = () => {
+      cancelAnimationFrame(frame)
+      frame = requestAnimationFrame(() => {
+        const sections = getSections()
+        if (sections.length === 0) {
+          setActiveId('')
+          return
         }
-      },
+
+        const activationLine = Math.min(window.innerHeight * 0.35, 280)
+        let active = sections[0]
+
+        for (const section of sections) {
+          const rect = section.getBoundingClientRect()
+          if (rect.top <= activationLine && rect.bottom > 0) {
+            active = section
+          }
+        }
+
+        setActiveId((current) => (current === active.id ? current : active.id))
+      })
+    }
+
+    const observer = new IntersectionObserver(
+      updateActiveSection,
       {
         rootMargin: '-20% 0px -60% 0px',
-        threshold:  0,
+        threshold:  [0, 0.01, 0.25, 0.5, 1],
       },
     )
 
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id)
-      if (el) observer.observe(el)
-    })
+    getSections().forEach((section) => observer.observe(section))
+    updateActiveSection()
 
-    return () => observer.disconnect()
-  }, [sectionIds])
+    window.addEventListener('scroll', updateActiveSection, { passive: true })
+    window.addEventListener('resize', updateActiveSection)
+    window.addEventListener('hashchange', updateActiveSection)
+    window.addEventListener(NAVIGATE_EVENT, updateActiveSection)
 
-  return activeId
+    return () => {
+      cancelAnimationFrame(frame)
+      observer.disconnect()
+      window.removeEventListener('scroll', updateActiveSection)
+      window.removeEventListener('resize', updateActiveSection)
+      window.removeEventListener('hashchange', updateActiveSection)
+      window.removeEventListener(NAVIGATE_EVENT, updateActiveSection)
+    }
+  }, [sectionIds, enabled])
+
+  return enabled ? activeId : ''
 }
