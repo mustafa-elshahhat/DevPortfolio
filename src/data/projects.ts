@@ -14,6 +14,7 @@ export interface Project {
   gallery?:    string[]
   galleryAlts?: string[]
   galleryCaptions?: string[]
+  portfolioPriority: number
   details: {
     problem:       string
     solution:      string
@@ -39,6 +40,7 @@ export const projects: Project[] = [
       '/images/projects/dr-mirror-admin-dashboard.webp',
       '/images/projects/dr-mirror-cart.webp',
     ],
+    portfolioPriority: 1,
     details: {
       problem:      'Customers needed a localized online store for medical apparel, while the business needed to manage manual payment confirmation and stock variants reliably.',
       solution:     'Built a complete order lifecycle with payment-proof upload and verification, a role-based admin dashboard, and bilingual (Arabic RTL / English) storefront.',
@@ -62,6 +64,7 @@ export const projects: Project[] = [
       '/images/projects/soulmate-cart.webp',
       '/images/projects/soulmate-admin-dashboard.webp',
     ],
+    portfolioPriority: 2,
     details: {
       problem:      'Shoppers wanted to either buy individual accessories or build personalized gift boxes, while the shop needed timely order notifications and admin control.',
       solution:     'Implemented a custom gift-box builder with category-based pricing, an admin dashboard for catalog and order management, and automated WhatsApp updates on order and payment status.',
@@ -89,6 +92,7 @@ export const projects: Project[] = [
       'Dermiva all products shopping page',
       'Dermiva product details page',
     ],
+    portfolioPriority: 4,
     details: {
       problem:      'A skincare storefront needed bilingual English and Arabic shopping flows, locale-aware layout direction, and a frontend foundation ready for a future backend/API integration.',
       solution:     'Built a responsive storefront with localized routes, RTL/LTR support, persistent cart and wishlist state, checkout screens, account mock flows, and accessible navigation and form states.',
@@ -121,6 +125,7 @@ export const projects: Project[] = [
       'Arabic-first responsive homepage with global freight visuals, service calls to action, and RTL navigation.',
       'Responsive services overview covering sea freight, air freight, land transport, warehousing, customs clearance, and tracking-related content.',
     ],
+    portfolioPriority: 3,
     details: {
       problem:      'A logistics company needed a public-facing website that could communicate its services across Arabic and English audiences, support Saudi-market search visibility, and convert visitors into qualified leads. The site also required practical contact paths through WhatsApp, email, phone, and location discovery without requiring a full logistics management backend.',
       solution:     'The solution is a responsive bilingual website with localized company pages, reusable SEO service landing pages, contact and quote workflows, WhatsApp shortcuts, Google Maps, and a logistics news section. A serverless endpoint aggregates Google News RSS content, while EmailJS handles contact submissions when the required environment variables are configured.',
@@ -139,6 +144,7 @@ export const projects: Project[] = [
     gallery: [
       '/images/projects/whatsapp-service-cover.webp',
     ],
+    portfolioPriority: 6,
     details: {
       problem:      'Embedding WhatsApp messaging directly inside an application couples it tightly to one stack and complicates session management.',
       solution:     'Built a reusable, framework-agnostic HTTP service that owns its own Baileys sessions and exposes simple REST endpoints any backend can call to send messages.',
@@ -159,6 +165,7 @@ export const projects: Project[] = [
       '/images/projects/moonwatch-catalog.webp',
       '/images/projects/moonwatch-room.webp',
     ],
+    portfolioPriority: 7,
     details: {
       problem:      'Watching IPTV streams together remotely is hard because each viewer drifts out of sync with no shared playback control.',
       solution:     'A host shares a six-letter room code and the server keeps all clients’ playheads aligned, with host-driven pause/seek and tolerance for brief disconnections.',
@@ -179,6 +186,7 @@ export const projects: Project[] = [
       '/images/projects/lap-service-pos-sales.webp',
       '/images/projects/lap-service-pos-users.webp',
     ],
+    portfolioPriority: 8,
     details: {
       problem:      'Repair workshops juggle sales, repair jobs, parts stock and customer balances across disconnected tools.',
       solution:     'A single desktop app unifying POS transactions, staged repair work orders, spare-parts inventory, customer credit, returns and expense tracking.',
@@ -200,6 +208,7 @@ export const projects: Project[] = [
       '/images/projects/autoparts-pos-invoices.webp',
       '/images/projects/autoparts-pos-expenses.webp',
     ],
+    portfolioPriority: 9,
     details: {
       problem:      'Small auto-parts shops need to track inventory costs, suppliers, credit customers and daily profit without heavyweight software.',
       solution:     'A desktop POS and inventory system covering sales, customer credit with payment history, returns, and categorized expense tracking.',
@@ -222,6 +231,7 @@ export const projects: Project[] = [
       '/images/projects/booknest-categories.webp',
       '/images/projects/booknest-book-detail.webp',
     ],
+    portfolioPriority: 5,
     details: {
       problem:      'A clean, dependency-free way to browse and discover books was needed as an exercise in front-end fundamentals.',
       solution:     'A static catalog where users browse books across categories and filter by title, author or category entirely on the client side.',
@@ -230,3 +240,5 @@ export const projects: Project[] = [
     },
   },
 ]
+
+projects.sort((a, b) => a.portfolioPriority - b.portfolioPriority)
